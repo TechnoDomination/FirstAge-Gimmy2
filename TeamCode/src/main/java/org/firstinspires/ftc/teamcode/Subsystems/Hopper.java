@@ -8,8 +8,8 @@ public class Hopper {
     public State state = State.REST;
     public boolean isTargetReached = false;
     public static Hopper instance;
-    private final double upPos = 0.35;
-    private final double downPos = 1;
+    private final double downPos = 0.75;
+    private final double upPos = 0.5;
     private final double restPos = 1;
 
     public enum State {

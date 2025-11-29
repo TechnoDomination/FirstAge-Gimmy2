@@ -44,12 +44,14 @@ public class TeleOpAutomation extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
             shooter.update();
+            intake.update();
             telemetry.update();
 
             if (!isStarted){
                 isStarted = true;
-                hopper.state = Hopper.State.REST;
+                hopper.state = Hopper.State.DOWN;
                 shooter.state = Shooter.State.CLOSE;
+                intake.state = Intake.State.OPEN;
             }
 
 
@@ -86,7 +88,7 @@ public class TeleOpAutomation extends LinearOpMode {
 
 
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
-            telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
+            //telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
             telemetry.addData("State Shooter:" , shooter.state);
             telemetry.update();
@@ -102,6 +104,6 @@ public class TeleOpAutomation extends LinearOpMode {
 
 
             telemetry.addData("Hopper: ", hopper.getHopperTelemetry());
-       }
+        }
     }
 }

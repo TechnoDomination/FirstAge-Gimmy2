@@ -25,10 +25,10 @@ public class Shooter {
 
     public Shooter(HardwareMap hardwareMap) {
         ShooterMotorLeft = hardwareMap.get(DcMotorEx.class, "ShooterMotorLeft");
-        ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
+        //ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ShooterMotorLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        ShooterMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         //ShooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         ShooterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ShooterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -67,7 +67,7 @@ public class Shooter {
     public void update() {
         switch (state) {
             case CLOSE:
-                setVelocityRPM(3100);
+                setVelocityRPM(750);
                 break;
             case MIDDLE:
                 setVelocityRPM(3600);
@@ -88,7 +88,7 @@ public class Shooter {
                 break;
         }
 
-        if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() == 3100) {
+        if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() == 750) {
             isTargetReached = true;
         } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() == 3600) {
             isTargetReached = true;
