@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 public class Shooter {
 
     public static Shooter instance;
-    public State state = State.CLOSE;
+    public State state = State.REST;
     public boolean isTargetReached = false;
     public DcMotorEx ShooterMotorLeft;
     public DcMotorEx ShooterMotorRight;
@@ -67,13 +67,13 @@ public class Shooter {
     public void update() {
         switch (state) {
             case CLOSE:
-                setVelocityRPM(750);
+                setVelocityRPM(650);
                 break;
             case MIDDLE:
-                setVelocityRPM(3600);
+                setVelocityRPM(850);
                 break;
             case FAR:
-                setVelocityRPM(4600);
+                setVelocityRPM(1000);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;
@@ -90,7 +90,7 @@ public class Shooter {
 
         if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() == 750) {
             isTargetReached = true;
-        } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() == 3600) {
+        } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() == 2000) {
             isTargetReached = true;
         } else if (state == Shooter.State.REST && ShooterMotorLeft.getPower() == 0) {
             isTargetReached = true;
@@ -99,6 +99,14 @@ public class Shooter {
         }
 
 
+    }
+
+    public String getShooterTelemetry() {
+        String telemetry = "";
+        telemetry = telemetry + "\n Shooter Velocity = " + ShooterMotorLeft.getVelocity();
+        telemetry = telemetry + "\n Shooter State = " + state;
+        telemetry = telemetry + "\n ";
+        return telemetry;
     }
 }
 

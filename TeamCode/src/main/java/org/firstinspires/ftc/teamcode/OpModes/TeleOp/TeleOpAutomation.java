@@ -51,7 +51,7 @@ public class TeleOpAutomation extends LinearOpMode {
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
                 shooter.state = Shooter.State.CLOSE;
-                intake.state = Intake.State.OPEN;
+                intake.state = Intake.State.ON;
             }
 
 
@@ -76,10 +76,10 @@ public class TeleOpAutomation extends LinearOpMode {
                 shooter.state = Shooter.State.FAR; //setPower(0.7)
             }
             if (gamepad1.dpad_up) {
-                intake.state = Intake.State.OPEN;
+                intake.state = Intake.State.ON;
             }
             if (gamepad1.dpad_down) {
-                intake.state = Intake.State.CLOSE;
+                intake.state = Intake.State.OFF;
 
 
             }
@@ -91,6 +91,7 @@ public class TeleOpAutomation extends LinearOpMode {
             //telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
             telemetry.addData("State Shooter:" , shooter.state);
+            telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.update();
             //hopper
             if (gamepad1.right_bumper) {

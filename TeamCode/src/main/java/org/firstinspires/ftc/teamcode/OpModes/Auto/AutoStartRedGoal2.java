@@ -8,27 +8,27 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
-import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
-@Autonomous(name = "AutoBlueBackWall", group = "Autonomous")
-public class AutoBlueBackWall extends LinearOpMode {
-
+@Autonomous (name = "AutoRedGoal", group = "Autonomous")
+public class AutoStartRedGoal2 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(0, 0, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(47.7, 55.8, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
 
-      //  customActions.update();
+        //customActions.update();
 
         waitForStart();
 
@@ -48,30 +48,28 @@ public class AutoBlueBackWall extends LinearOpMode {
                             return true;
                         },
 
+
                         new SequentialAction(
-                                customActions.shootMiddleBlue,
+                               // customActions.shootFront,
+                                new SleepAction(1),
+                                Positions.ShootingPositionsRed.runToExact,
+                                customActions.stopDrive
+                               /* new SleepAction(3),
+                                customActions.hopperUp,
+                                new SleepAction(1),
+                                customActions.hopperDown,
                                 new SleepAction(2),
-                                Positions.MoveForward.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1),
-                                Positions.TurningBlue.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(1),
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(1),
+                                new SleepAction(2),
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(1),
-                                customActions.hopperUp,
-                                new SleepAction(1),
-                                customActions.hopperDown,
-                                new SleepAction(1),
-                                Positions.EndingBlue.runToExact,
+                                new SleepAction(2),
+                                Positions.ParkPositionsRed.runToExact,
                                 customActions.stopDrive,
-                                customActions.stopShooter
+                                customActions.stopShooter*/
                         )
                 )
         );

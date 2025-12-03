@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.PIDF.PIDFController;
-import org.firstinspires.ftc.teamcode.PIDF.PIDFParams;
+import org.firstinspires.ftc.teamcode.Util.PIDFController;
+import org.firstinspires.ftc.teamcode.Util.PIDFParams;
 
 import java.util.Arrays;
 import java.util.List;

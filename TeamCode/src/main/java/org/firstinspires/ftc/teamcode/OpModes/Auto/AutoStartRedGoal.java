@@ -8,15 +8,16 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
-import org.firstinspires.ftc.teamcode.Positions;
+import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
-import org.firstinspires.ftc.teamcode.Action.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
-@Autonomous(name = "AutoRedGoal", group = "Auto")
+@Autonomous (name = "AutoRedGoal", group = "Autonomous")
 public class AutoStartRedGoal extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -27,7 +28,7 @@ public class AutoStartRedGoal extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
 
-        customActions.update();
+        //customActions.update();
 
         waitForStart();
 

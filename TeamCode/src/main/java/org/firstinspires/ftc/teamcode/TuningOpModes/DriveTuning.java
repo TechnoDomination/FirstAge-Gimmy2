@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TuningOpModes;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -12,7 +12,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
-import org.firstinspires.ftc.teamcode.PIDF.PIDFParams;
+import org.firstinspires.ftc.teamcode.Util.PIDFParams;
+import org.firstinspires.ftc.teamcode.Util.Positions;
 
 @Config
 @TeleOp (name = "Drive Tuning", group = "Tuning OpModes")
@@ -26,7 +27,7 @@ public class DriveTuning extends LinearOpMode {
     public void runOpMode() {
         // telemetry = FtcDashboard.getInstance().getTelemetry();
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(48, -61, 0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(0, 0, 0.0));
         Drive drive = new Drive(hardwareMap);
 
 
@@ -42,11 +43,12 @@ public class DriveTuning extends LinearOpMode {
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
+                            telemetry.addData("heading: ", Localizer.pose.getHeading());
                             telemetry.update();
                             return true;
                         },
                         new SequentialAction(
-                                Positions.MoveRightBlueGoal.runToExact,
+                                Positions.Test2.runToExact,
                                 // customActions.intakeForeArmSubEdge,
                                 //  new SleepAction(1),
                                 new SleepAction(1),

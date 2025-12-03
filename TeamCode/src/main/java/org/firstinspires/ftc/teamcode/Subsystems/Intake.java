@@ -10,7 +10,7 @@ public class Intake {
     public static Intake instance;
     //public Intake.State state = Intake.State.CLOSE;
     public DcMotorEx IntakeMotor;
-    public Intake.State state = Intake.State.CLOSE;
+    public Intake.State state = Intake.State.OFF;
     public boolean isTargetReached = false;
     public static final double NEW_P = 50.0;
     public static final double NEW_I = 0.0;
@@ -33,23 +33,23 @@ public class Intake {
     }
 
     public enum State {
-        CLOSE,
-        OPEN
+        OFF,
+        ON
     }
 
     public void update() {
         switch (state) {
-            case CLOSE:
+            case OFF:
                 IntakeMotor.setPower(0);
                 break;
-            case OPEN:
-                IntakeMotor.setPower(1);
+            case ON:
+                IntakeMotor.setPower(0.25);
                 break;
         }
 
-        if (state == State.CLOSE && IntakeMotor.getPower() == 0) {
+        if (state == State.OFF && IntakeMotor.getPower() == 0) {
             isTargetReached = true;
-        } else if (state == State.OPEN && IntakeMotor.getPower() == 1) {
+        } else if (state == State.ON && IntakeMotor.getPower() == 1) {
             isTargetReached = true;
         } else {
             isTargetReached = false;

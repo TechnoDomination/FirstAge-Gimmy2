@@ -8,16 +8,17 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
-import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
-@Autonomous(name = "AutoBlueBackWall", group = "Autonomous")
-public class AutoBlueBackWall extends LinearOpMode {
+@Autonomous(name = "AutoRedBackWall", group = "Autonomous")
+public class AutoRedBackWall2 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -28,7 +29,7 @@ public class AutoBlueBackWall extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
 
-      //  customActions.update();
+     //   customActions.update();
 
         waitForStart();
 
@@ -49,12 +50,12 @@ public class AutoBlueBackWall extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootMiddleBlue,
+                                customActions.shootMiddle,
                                 new SleepAction(2),
                                 Positions.MoveForward.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
-                                Positions.TurningBlue.runToExact,
+                                Positions.TurningRed.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
                                 customActions.hopperUp,
@@ -69,9 +70,11 @@ public class AutoBlueBackWall extends LinearOpMode {
                                 new SleepAction(1),
                                 customActions.hopperDown,
                                 new SleepAction(1),
-                                Positions.EndingBlue.runToExact,
+                                Positions.EndingRed.runToExact,
                                 customActions.stopDrive,
                                 customActions.stopShooter
+
+
                         )
                 )
         );
