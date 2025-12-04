@@ -1,21 +1,30 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
+import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @TeleOp(name = "TeleOp", group = "TeleOp")
 public class TeleOpAutomation extends LinearOpMode {
 
 
+    private List<Action> runningActions = new ArrayList<>();
     double motorMaxRPM = 6000;
     double ticksPerRev = 28;
     double desiredRPM;
@@ -36,6 +45,7 @@ public class TeleOpAutomation extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        CustomActions customActions = new CustomActions(hardwareMap);
 
 
 
@@ -51,7 +61,7 @@ public class TeleOpAutomation extends LinearOpMode {
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
                 shooter.state = Shooter.State.CLOSE;
-                intake.state = Intake.State.ON;
+                intake.state = Intake.State.FORWARD;
             }
 
 
@@ -76,12 +86,10 @@ public class TeleOpAutomation extends LinearOpMode {
                 shooter.state = Shooter.State.FAR; //setPower(0.7)
             }
             if (gamepad1.dpad_up) {
-                intake.state = Intake.State.ON;
+                intake.state = Intake.State.FORWARD;
             }
             if (gamepad1.dpad_down) {
-                intake.state = Intake.State.OFF;
-
-
+                intake.state = Intake.State.BACKWARD;
             }
 
 
@@ -105,6 +113,27 @@ public class TeleOpAutomation extends LinearOpMode {
 
 
             telemetry.addData("Hopper: ", hopper.getHopperTelemetry());
+
+            //automations
+            TelemetryPacket packet = new TelemetryPacket();
+
+            // update running actions
+            List<Action> newActions = new ArrayList<>();
+            for (Action action : runningActions) {
+                action.preview(packet.fieldOverlay());
+                if (action.run(packet)) {
+                    newActions.add(action);
+                }
+            }
+            runningActions = newActions;
+
+            if (gamepad1.dpad_right) {
+                runningActions.add(new SequentialAction(
+                   customActions.hopperUp,
+                   new SleepAction(0.5),
+                   customActions.hopperDown
+                ));
+            }
         }
     }
 }

@@ -88,9 +88,9 @@ public class Shooter {
                 break;
         }
 
-        if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() == 750) {
+        if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() >= 100) {
             isTargetReached = true;
-        } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() == 2000) {
+        } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() >= 100) {
             isTargetReached = true;
         } else if (state == Shooter.State.REST && ShooterMotorLeft.getPower() == 0) {
             isTargetReached = true;

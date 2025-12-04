@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 public class Intake {
     public static Intake instance;
-    //public Intake.State state = Intake.State.CLOSE;
     public DcMotorEx IntakeMotor;
     public Intake.State state = Intake.State.OFF;
     public boolean isTargetReached = false;
@@ -27,6 +26,14 @@ public class Intake {
         instance = this;
     }
 
+    public void setVelocityRPM(double targetRPM) {
+        // Prevent setting a velocity above the motor's capability.
+        // Convert RPM to ticks per second.
+        double targetVelocityTPS = (targetRPM / 60) * 28;
+        IntakeMotor.setVelocity(targetVelocityTPS);
+        //ShooterMotorRight.setVelocity(targetVelocityTPS);
+    }
+
     public void stopMotor() {
         IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         IntakeMotor.setPower(0.0);
@@ -34,7 +41,8 @@ public class Intake {
 
     public enum State {
         OFF,
-        ON
+        FORWARD,
+        BACKWARD
     }
 
     public void update() {
@@ -42,14 +50,18 @@ public class Intake {
             case OFF:
                 IntakeMotor.setPower(0);
                 break;
-            case ON:
-                IntakeMotor.setPower(0.25);
+            case FORWARD:
+                setVelocityRPM(1000);
                 break;
+            case BACKWARD:
+                setVelocityRPM(-1000);
         }
 
         if (state == State.OFF && IntakeMotor.getPower() == 0) {
             isTargetReached = true;
-        } else if (state == State.ON && IntakeMotor.getPower() == 1) {
+        } else if (state == State.FORWARD && IntakeMotor.getVelocity() >= 200) {
+            isTargetReached = true;
+        } else if (state == State.BACKWARD && IntakeMotor.getVelocity() >= 200) {
             isTargetReached = true;
         } else {
             isTargetReached = false;
