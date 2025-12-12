@@ -52,8 +52,8 @@ public class AutoStartRedGoal2 extends LinearOpMode {
 
 
                         new SequentialAction(
-                                customActions.intakeForward,
                                 customActions.shootFront,
+                                customActions.intakeForward,
                                 new SleepAction(1),
                                 Positions.ShootingPositionsRed.runToExact,
                                 customActions.stopDrive,

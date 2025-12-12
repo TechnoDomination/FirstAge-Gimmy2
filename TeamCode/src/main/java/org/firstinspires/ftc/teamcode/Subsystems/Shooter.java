@@ -75,7 +75,7 @@ public class Shooter {
                 setVelocityRPM(830);
                 break;
             case FAR:
-                setVelocityRPM(1475);
+                setVelocityRPM(1400);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;
