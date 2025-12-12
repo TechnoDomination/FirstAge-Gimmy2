@@ -8,8 +8,8 @@ public class Hopper {
     public State state = State.REST;
     public boolean isTargetReached = false;
     public static Hopper instance;
-    private final double downPos = 0.75;
-    private final double upPos = 0.5;
+    private final double upPos = 0.75;
+    private final double downPos = 1;
     private final double restPos = 1;
 
     public enum State {
@@ -25,11 +25,11 @@ public class Hopper {
     }
     public void update() {
         switch (state) {
-            case UP:
-                HopperServo.setPosition(upPos);
-                break;
             case DOWN:
                 HopperServo.setPosition(downPos);
+                break;
+            case UP:
+                HopperServo.setPosition(upPos);
                 break;
             case REST:
                 HopperServo.setPosition(restPos);
@@ -40,7 +40,7 @@ public class Hopper {
             isTargetReached = true;
         } else if (state == State.DOWN && HopperServo.getPosition() == downPos) {
             isTargetReached = true;
-        } else if (state == State.REST && HopperServo.getPosition() == downPos) {
+        } else if (state == State.REST && HopperServo.getPosition() == restPos) {
             isTargetReached = true;
         } else {
             isTargetReached = false;

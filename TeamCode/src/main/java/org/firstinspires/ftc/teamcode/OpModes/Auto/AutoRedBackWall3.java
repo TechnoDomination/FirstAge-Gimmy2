@@ -12,14 +12,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Util.Positions;
 
-@Autonomous(name = "AutoRedBackWall", group = "Autonomous")
-public class AutoRedBackWall2 extends LinearOpMode {
+@Autonomous(name = "AutoRedBackWallMiddle", group = "Autonomous")
+public class AutoRedBackWall3 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -30,7 +30,6 @@ public class AutoRedBackWall2 extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
-
 
      //   customActions.update();
 
@@ -54,15 +53,11 @@ public class AutoRedBackWall2 extends LinearOpMode {
 
                         new SequentialAction(
                                 customActions.intakeForward,
-                                customActions.shootFar,
-                               new SleepAction(2),
-                                Positions.NewTurningRed.runToExact,
-                               new SleepAction(2),
-                                //Positions.NewMoveForward.runToExact,
+                                customActions.shootMiddle,
+                                new SleepAction(2),
+                                Positions.ShootingPositionsRedMiddle.runToExact,
                                 customActions.stopDrive,
-                                /*new SleepAction(1),
-                                Positions.TurningRed.runToExact,
-                                customActions.stopDrive,*/
+                                new SleepAction(1),
                                 new SleepAction(2),
                                 customActions.hopperUp,
                                 new SleepAction(1),

@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
+
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -100,19 +101,19 @@ public class TeleOpAutomation extends LinearOpMode {
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
             telemetry.addData("State Shooter:" , shooter.state);
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
+            telemetry.addData("Hopper: ", hopper.getHopperTelemetry());
+            telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
             telemetry.update();
             //hopper
-            if (gamepad1.right_bumper) {
-                if (shooter.state == Shooter.State.CLOSE || shooter.state == Shooter.State.FAR || shooter.state == Shooter.State.MIDDLE) {
+          /*  if (gamepad1.right_bumper) {
                     hopper.state = Hopper.State.UP;
-                }
-            }
+            }*/
             if (gamepad1.left_bumper) {
                 hopper.state = Hopper.State.DOWN;
             }
 
 
-            telemetry.addData("Hopper: ", hopper.getHopperTelemetry());
+
 
             //automations
             TelemetryPacket packet = new TelemetryPacket();
@@ -127,7 +128,7 @@ public class TeleOpAutomation extends LinearOpMode {
             }
             runningActions = newActions;
 
-            if (gamepad1.dpad_right) {
+            if (gamepad1.right_bumper) {
                 runningActions.add(new SequentialAction(
                    customActions.hopperUp,
                    new SleepAction(0.5),

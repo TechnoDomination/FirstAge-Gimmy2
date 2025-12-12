@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 
 public class Shooter {
 
@@ -17,7 +19,7 @@ public class Shooter {
     public DcMotorEx ShooterMotorRight;
     DcMotorEx motorExLeft;
     public boolean isVelReached = true;
-    public static final double NEW_P = 50.0;
+    public static final double NEW_P = 55.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
     public static final double NEW_F = 0.000357;
@@ -67,13 +69,13 @@ public class Shooter {
     public void update() {
         switch (state) {
             case CLOSE:
-                setVelocityRPM(650);
+                setVelocityRPM(790);
                 break;
             case MIDDLE:
-                setVelocityRPM(850);
+                setVelocityRPM(830);
                 break;
             case FAR:
-                setVelocityRPM(1000);
+                setVelocityRPM(1475);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;
@@ -88,6 +90,16 @@ public class Shooter {
                 break;
         }
 
+       /* if ((state == State.CLOSE) && ((ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5 || ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5))) {
+            ShooterMotorLeft.setPower(0);
+            ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        } else if ((state == State.MIDDLE) && ((ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5 || ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5))) {
+            ShooterMotorLeft.setPower(0);
+            ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        } else if ((state == State.FAR) && ((ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5 || ShooterMotorLeft.getCurrent(CurrentUnit.AMPS) > 5))) {
+            ShooterMotorLeft.setPower(0);
+            ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }*/
         if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() >= 100) {
             isTargetReached = true;
         } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() >= 100) {
@@ -101,12 +113,13 @@ public class Shooter {
 
     }
 
-    public String getShooterTelemetry() {
-        String telemetry = "";
-        telemetry = telemetry + "\n Shooter Velocity = " + ShooterMotorLeft.getVelocity();
-        telemetry = telemetry + "\n Shooter State = " + state;
-        telemetry = telemetry + "\n ";
-        return telemetry;
+
+        public String getShooterTelemetry(){
+            String telemetry = "";
+            telemetry = telemetry + "\n Shooter Velocity = " + ShooterMotorLeft.getVelocity();
+            telemetry = telemetry + "\n Shooter State = " + state;
+            telemetry = telemetry + "\n ";
+            return telemetry;
+        }
     }
-}
 

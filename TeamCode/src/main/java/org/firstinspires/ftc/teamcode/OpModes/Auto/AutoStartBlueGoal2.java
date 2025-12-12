@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
@@ -22,10 +23,11 @@ public class AutoStartBlueGoal2 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(-47.7, 55.8, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(-45, 55, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
 
        // customActions.update();
@@ -39,6 +41,7 @@ public class AutoStartBlueGoal2 extends LinearOpMode {
                             customActions.update();
 
 
+
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
                             telemetry.addData("Heading pos",- Localizer.pose.getHeading());
@@ -50,14 +53,11 @@ public class AutoStartBlueGoal2 extends LinearOpMode {
 
 
                         new SequentialAction(
+                                customActions.intakeForward,
                                 customActions.shootFront,
                                 new SleepAction(1),
                                 Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(3),
-                                customActions.hopperUp,
-                                new SleepAction(1),
-                                customActions.hopperDown,
                                 new SleepAction(2),
                                 customActions.hopperUp,
                                 new SleepAction(1),
@@ -67,9 +67,15 @@ public class AutoStartBlueGoal2 extends LinearOpMode {
                                 new SleepAction(1),
                                 customActions.hopperDown,
                                 new SleepAction(2),
-                                Positions.ParkPositionsBlue.runToExact,
+                                customActions.hopperUp,
+                                new SleepAction(1),
+                                customActions.hopperDown,
+                                new SleepAction(2),
+                                Positions.BlueIntakeTape1Start.runToExact,
+                                //Positions.ParkPositionsBlue.runToExact,
                                 customActions.stopDrive,
-                                customActions.stopShooter
+                                customActions.stopShooter,
+                                customActions.stopIntake
                         )
                 )
         );

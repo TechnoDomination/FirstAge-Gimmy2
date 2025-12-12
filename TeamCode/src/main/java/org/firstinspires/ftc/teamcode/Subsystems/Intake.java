@@ -5,12 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class Intake {
     public static Intake instance;
     public DcMotorEx IntakeMotor;
     public Intake.State state = Intake.State.OFF;
     public boolean isTargetReached = false;
+    private static ElapsedTime timer = new ElapsedTime();
     public static final double NEW_P = 50.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
@@ -42,20 +46,43 @@ public class Intake {
     public enum State {
         OFF,
         FORWARD,
-        BACKWARD
+        BACKWARD,
+        SLOWDOWN
     }
 
     public void update() {
+
         switch (state) {
             case OFF:
                 IntakeMotor.setPower(0);
                 break;
             case FORWARD:
-                setVelocityRPM(1000);
+                setVelocityRPM(2000);
                 break;
             case BACKWARD:
                 setVelocityRPM(-1000);
+                break;
+            case SLOWDOWN:
+                setVelocityRPM(100);
         }
+
+        if (IntakeMotor.getCurrent(CurrentUnit.AMPS) > 7.5)
+        {
+            state = State.SLOWDOWN;
+            timer.reset();
+        }
+
+        if (state == State.SLOWDOWN && timer.seconds() > 2){
+            state = State.FORWARD;
+        }
+
+
+
+
+        /*if ((state == State.FORWARD) && ((IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5 || IntakeMotor.getCurrent(CurrentUnit.AMPS) > 5))){
+            IntakeMotor.setPower(0);
+            IntakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }*/
 
         if (state == State.OFF && IntakeMotor.getPower() == 0) {
             isTargetReached = true;
@@ -67,5 +94,12 @@ public class Intake {
             isTargetReached = false;
         }
 
+    }
+
+    public String getIntakeTelemetry(){
+        String telemetry = "";
+        telemetry = telemetry + "\n Intake Motor Amps = " + IntakeMotor.getCurrent(CurrentUnit.AMPS);
+        telemetry = telemetry + "\n ";
+        return telemetry;
     }
 }
