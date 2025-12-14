@@ -69,13 +69,13 @@ public class Shooter {
     public void update() {
         switch (state) {
             case CLOSE:
-                setVelocityRPM(790);
+                setVelocityRPM(700);
                 break;
             case MIDDLE:
                 setVelocityRPM(830);
                 break;
             case FAR:
-                setVelocityRPM(1400);
+                setVelocityRPM(1340);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;

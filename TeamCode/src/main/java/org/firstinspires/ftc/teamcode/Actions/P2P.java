@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Angle;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
@@ -16,6 +17,8 @@ public class P2P implements Action {
     double rotation;
     Poses robotPosition;
     public boolean isTargetReached;
+    public ElapsedTime timer = new ElapsedTime();
+    public boolean checkTimer = false;
 
     public P2P(Vector2d vector2d, double rotation2d) {
         this.targetVector = vector2d;
@@ -47,6 +50,13 @@ public class P2P implements Action {
         motorController.BackLeftDCMotor.setPower(rotY - rotX + turn);
         motorController.FrontRightDCMotor.setPower(rotY - rotX - turn);
         motorController.BackRightDCMotor.setPower(rotY + rotX - turn);
+        isTargetReached = true;
+       /* if ((Math.abs(latError) > 2 || Math.abs(axialError) > 2) && timer.seconds() > 5 && checkTimer) {
+            isTargetReached = false;
+            checkTimer = false;
+
+            return isTargetReached;
+        }*/
 
         //checking if it has reached the point
         return !(

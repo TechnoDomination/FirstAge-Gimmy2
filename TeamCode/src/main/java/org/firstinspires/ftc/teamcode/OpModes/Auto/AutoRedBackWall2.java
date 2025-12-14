@@ -24,7 +24,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(12, -52, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(8, -52, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
@@ -74,6 +74,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 Positions.RedIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
+                                customActions.slowIntake,
                                 Positions.RedIntakeTape3End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),

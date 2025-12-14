@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.acmerobotics.roadrunner.Action;
 
@@ -16,6 +17,7 @@ public class CustomActions {
     Intake intake = Intake.instance;
     public Drive drive = Drive.instance;
     public static CustomActions instance;
+    P2P p2p = new P2P(new Vector2d(0,0), 0);
 
     public CustomActions(HardwareMap hardwareMap) {
         instance = this;
@@ -27,6 +29,17 @@ public class CustomActions {
         shooter.update();
         intake.update();
     }
+
+    public Action timerReset = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            p2p.timer.reset();
+            p2p.checkTimer = true;
+
+            return false;
+        }
+    };
 
     public Action stopDrive = new Action() {
         @Override
@@ -127,6 +140,14 @@ public class CustomActions {
             intake.state = Intake.State.OFF;
 
             return !Intake.instance.isTargetReached;
+        }
+    };
+    public Action slowIntake = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.state = Intake.State.SLOWDOWN;
+
+            return false;
         }
     };
 

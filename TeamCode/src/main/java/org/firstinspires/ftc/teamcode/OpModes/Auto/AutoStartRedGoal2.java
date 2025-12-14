@@ -5,11 +5,13 @@ import static java.lang.Math.PI;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.P2P;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -65,18 +67,21 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(2),
+                                new SleepAction(2.5),
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(2),
+                                new SleepAction(0.5),
                                 Positions.RedIntakeTape1Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
+                               customActions.slowIntake,
+                               // customActions.timerReset,
                                 Positions.RedIntakeTape1End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(2),
                                 Positions.ShootingPositionsRed.runToExact,
+                                //customActions.intakeForward,
                                 customActions.stopDrive,
                                 new SleepAction(2),
                                 customActions.hopperUp,
@@ -86,7 +91,7 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(2),
+                                new SleepAction(2.5),
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,

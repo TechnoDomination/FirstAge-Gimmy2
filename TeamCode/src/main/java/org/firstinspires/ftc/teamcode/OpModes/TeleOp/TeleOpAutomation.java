@@ -4,12 +4,16 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -34,6 +38,9 @@ public class TeleOpAutomation extends LinearOpMode {
     double velocityY;
     double velocityX;
 
+    public Servo rgblight = null;
+    private DistanceSensor distanceSensor;
+
     boolean isStarted = false;
 
 
@@ -42,13 +49,14 @@ public class TeleOpAutomation extends LinearOpMode {
 
 
         Drive drive = new Drive(hardwareMap);
-
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        rgblight = hardwareMap.get(Servo.class, "Rgblight");
+        distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
 
-
+        Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
 
         waitForStart();
@@ -57,6 +65,12 @@ public class TeleOpAutomation extends LinearOpMode {
             shooter.update();
             intake.update();
             telemetry.update();
+
+            if (distanceSensor.getDistance(DistanceUnit.CM) <= 10) {
+                rgblight.setPosition(0.7);
+            } else {
+                rgblight.setPosition(0);
+            }
 
             if (!isStarted){
                 isStarted = true;
@@ -103,6 +117,8 @@ public class TeleOpAutomation extends LinearOpMode {
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Hopper: ", hopper.getHopperTelemetry());
             telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
+            telemetry.addData("deviceName", distanceSensor.getDeviceName());
+            telemetry.addData("range", distanceSensor.getDistance(DistanceUnit.CM));
             telemetry.update();
             //hopper
           /*  if (gamepad1.right_bumper) {
