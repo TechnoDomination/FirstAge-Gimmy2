@@ -66,7 +66,8 @@ public class TeleOpAutomation extends LinearOpMode {
             intake.update();
             telemetry.update();
 
-            if (distanceSensor.getDistance(DistanceUnit.CM) <= 10) {
+            double distance = distanceSensor.getDistance(DistanceUnit.CM); //getFilteredDistance();
+            if (distance <= 10) {
                 rgblight.setPosition(0.7);
             } else {
                 rgblight.setPosition(0);
@@ -105,6 +106,12 @@ public class TeleOpAutomation extends LinearOpMode {
             }
             if (gamepad1.dpad_down) {
                 intake.state = Intake.State.BACKWARD;
+            }
+            if (gamepad1.dpad_left) {
+                intake.state = Intake.State.REST;
+            }
+            if (gamepad1.dpad_right) {
+                intake.state = Intake.State.REST;
             }
 
 
@@ -152,5 +159,19 @@ public class TeleOpAutomation extends LinearOpMode {
                 ));
             }
         }
+    }
+
+    private double getFilteredDistance() {
+        final int filter_count = 5;
+        double totalDistance = 0;
+
+        for (int i = 0; i < filter_count; i++) {
+            totalDistance += distanceSensor.getDistance(DistanceUnit.CM);
+            sleep(10);
+        }
+
+        double averageDistance = totalDistance / filter_count;
+
+        return averageDistance;
     }
 }

@@ -69,10 +69,10 @@ public class Shooter {
     public void update() {
         switch (state) {
             case CLOSE:
-                setVelocityRPM(700);
+                setVelocityRPM(750);
                 break;
             case MIDDLE:
-                setVelocityRPM(830);
+                setVelocityRPM(820);
                 break;
             case FAR:
                 setVelocityRPM(1340);

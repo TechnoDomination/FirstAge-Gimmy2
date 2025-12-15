@@ -47,7 +47,8 @@ public class Intake {
         OFF,
         FORWARD,
         BACKWARD,
-        SLOWDOWN
+        SLOWDOWN,
+        REST
     }
 
     public void update() {
@@ -64,6 +65,8 @@ public class Intake {
                 break;
             case SLOWDOWN:
                 setVelocityRPM(100);
+            case REST:
+                setVelocityRPM(0);
         }
 
         if (IntakeMotor.getCurrent(CurrentUnit.AMPS) > 7.5)
@@ -72,7 +75,7 @@ public class Intake {
             timer.reset();
         }
 
-        if (state == State.SLOWDOWN && timer.seconds() > 2){
+        if (state == State.SLOWDOWN && timer.seconds() > 1.5){
             state = State.FORWARD;
         }
 

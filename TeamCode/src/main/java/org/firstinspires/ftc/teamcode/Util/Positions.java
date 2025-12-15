@@ -11,7 +11,7 @@ public enum Positions {
 
     //Auto Red Goal - LOCALIZER = x:48, y:55, rotation:PI*0.95
     MoveOutTriangleRedGoal(new Vector2d(40, 15), PI*.25),
-    ShootingPositionsRed(new Vector2d(34, 28), PI*.20),
+    ShootingPositionsRed(new Vector2d(34, 28), PI*.25),
     RedIntakeTape1Start(new Vector2d(40, 13), PI*0.5),
     RedIntakeTape1End(new Vector2d(70, 15), PI*0.5),
     RedIntakeTape3Start(new Vector2d(30, -15), PI*0.5),
@@ -32,7 +32,7 @@ public enum Positions {
     BlueIntakeTape3End(new Vector2d(-49.5, -31.5), PI*-0.5),
     ParkPositionsBlue(new Vector2d(-50, 0), PI*-0.25),
     TurningBlue(new Vector2d(0,  70), PI*-0.25),
-    NewTurningBlue(new Vector2d(-8, -48),PI*-0.115),
+    NewTurningBlue(new Vector2d(-8, -48),PI*-0.125),
     EndingBlue(new Vector2d(-20,  60), PI*-0.25),
     NewEndingBlue(new Vector2d(-20,-30), PI*-0.25),
     ShootingPositionsBlueMiddle(new Vector2d(-12, 24), PI*-0.25),
