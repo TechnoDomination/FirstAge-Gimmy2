@@ -78,7 +78,7 @@ public class AutoBlueBackWall2 extends LinearOpMode {
                                 Positions.BlueIntakeTape3End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
-                                Positions.NewTurningBlue.runToExact,
+                                Positions.NewTurningBlue2.runToExact,
                                 new SleepAction(1),
                                 customActions.stopDrive,
                                 customActions.hopperUp,

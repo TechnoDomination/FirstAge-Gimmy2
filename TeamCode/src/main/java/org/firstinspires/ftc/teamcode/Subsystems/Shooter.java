@@ -57,9 +57,11 @@ public class Shooter {
     }
 
     public enum State {
+        AUTOCLOSE,
         CLOSE,
         MIDDLE,
         FAR,
+        AUTOFAR,
         REST,
         SHOOTMID,
         SHOOTMIDBLUE,
@@ -68,6 +70,9 @@ public class Shooter {
 
     public void update() {
         switch (state) {
+            case AUTOCLOSE:
+                setVelocityRPM(710);
+                break;
             case CLOSE:
                 setVelocityRPM(750);
                 break;
@@ -75,7 +80,9 @@ public class Shooter {
                 setVelocityRPM(820);
                 break;
             case FAR:
-                setVelocityRPM(1340);
+                setVelocityRPM(1400);
+            case AUTOFAR:
+                setVelocityRPM(1400);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;
@@ -100,9 +107,11 @@ public class Shooter {
             ShooterMotorLeft.setPower(0);
             ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }*/
-        if (state == Shooter.State.CLOSE && ShooterMotorLeft.getVelocity() >= 100) {
+        if (state == Shooter.State.AUTOCLOSE && ShooterMotorLeft.getVelocity() >= 700) {
             isTargetReached = true;
         } else if (state == Shooter.State.MIDDLE && ShooterMotorLeft.getVelocity() >= 100) {
+            isTargetReached = true;
+        } else if (state == State.AUTOFAR && ShooterMotorLeft.getPower() >=1300) {
             isTargetReached = true;
         } else if (state == Shooter.State.REST && ShooterMotorLeft.getPower() == 0) {
             isTargetReached = true;

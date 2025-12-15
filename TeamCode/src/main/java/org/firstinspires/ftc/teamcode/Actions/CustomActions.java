@@ -85,7 +85,7 @@ public class CustomActions {
     public Action shootFront = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.CLOSE;
+            shooter.state = Shooter.State.AUTOCLOSE;
 
             return !shooter.isVelReached;
         }
@@ -101,7 +101,7 @@ public class CustomActions {
     public Action shootFar = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.FAR;
+            shooter.state = Shooter.State.AUTOFAR;
 
             return !shooter.isVelReached;
         }

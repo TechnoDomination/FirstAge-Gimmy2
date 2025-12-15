@@ -24,7 +24,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Localizer localizer = new Localizer(hardwareMap, new Poses(8, -52, PI*0.0));
+        Localizer localizer = new Localizer(hardwareMap, new Poses(12, -52, PI*0.0));
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
@@ -55,7 +55,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                         new SequentialAction(
                                 customActions.shootFar,
                                 customActions.intakeForward,
-                               new SleepAction(1),
+                               new SleepAction(1.5),
                                 Positions.NewTurningRed.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(2),
@@ -70,7 +70,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(2),
+                                new SleepAction(.5),
                                 Positions.RedIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
@@ -78,7 +78,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 Positions.RedIntakeTape3End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
-                                Positions.NewTurningRed.runToExact,
+                                Positions.NewTurningRed2.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
                                 customActions.hopperUp,
@@ -88,7 +88,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                new SleepAction(2),
+                                new SleepAction(2.5),
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,

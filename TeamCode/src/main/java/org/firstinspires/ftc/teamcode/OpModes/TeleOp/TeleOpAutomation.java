@@ -66,7 +66,8 @@ public class TeleOpAutomation extends LinearOpMode {
             intake.update();
             telemetry.update();
 
-            double distance = distanceSensor.getDistance(DistanceUnit.CM); //getFilteredDistance();
+            //double distance = distanceSensor.getDistance(DistanceUnit.CM);
+            double distance = getFilteredDistance();
             if (distance <= 10) {
                 rgblight.setPosition(0.7);
             } else {
@@ -162,7 +163,7 @@ public class TeleOpAutomation extends LinearOpMode {
     }
 
     private double getFilteredDistance() {
-        final int filter_count = 5;
+        final int filter_count = 2;
         double totalDistance = 0;
 
         for (int i = 0; i < filter_count; i++) {
