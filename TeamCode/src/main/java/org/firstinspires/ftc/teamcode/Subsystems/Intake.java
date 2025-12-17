@@ -75,7 +75,7 @@ public class Intake {
             timer.reset();
         }
 
-        if (state == State.SLOWDOWN && timer.seconds() > 1.5){
+        if (state == State.SLOWDOWN && timer.seconds() > 0.5){
             state = State.FORWARD;
         }
 

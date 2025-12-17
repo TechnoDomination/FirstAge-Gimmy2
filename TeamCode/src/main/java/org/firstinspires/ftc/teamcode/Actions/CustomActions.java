@@ -93,7 +93,7 @@ public class CustomActions {
     public Action shootMiddle = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.MIDDLE;
+            shooter.state = Shooter.State.AUTOMIDDLE;
 
             return !shooter.isVelReached;
         }

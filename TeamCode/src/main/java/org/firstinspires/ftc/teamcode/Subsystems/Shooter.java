@@ -19,7 +19,7 @@ public class Shooter {
     public DcMotorEx ShooterMotorRight;
     DcMotorEx motorExLeft;
     public boolean isVelReached = true;
-    public static final double NEW_P = 55.0;
+    public static final double NEW_P = 60.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
     public static final double NEW_F = 0.000357;
@@ -59,6 +59,7 @@ public class Shooter {
     public enum State {
         AUTOCLOSE,
         CLOSE,
+        AUTOMIDDLE,
         MIDDLE,
         FAR,
         AUTOFAR,
@@ -75,6 +76,9 @@ public class Shooter {
                 break;
             case CLOSE:
                 setVelocityRPM(750);
+                break;
+            case AUTOMIDDLE:
+                setVelocityRPM(785);
                 break;
             case MIDDLE:
                 setVelocityRPM(820);
