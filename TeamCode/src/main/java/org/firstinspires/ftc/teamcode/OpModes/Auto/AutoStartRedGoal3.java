@@ -57,7 +57,7 @@ public class AutoStartRedGoal3 extends LinearOpMode {
 
 
                         new SequentialAction(
-                                customActions.shootFront,
+                                customActions.shootFrontRed,
                                 customActions.intakeForward,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsRed.runToExact,
@@ -102,12 +102,14 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 new SleepAction(hopperDownTime),
                                 Positions.RedIntakeTape2Start.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                //new SleepAction(driveTime),
                                 customActions.slowIntake,
                                 // customActions.timerReset,
                                 Positions.RedIntakeTape2End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
+                                Positions.RedIntakeTape2Start.runToExact,
+                                customActions.stopDrive,
                                 Positions.ShootingPositionsRed.runToExact,
                                 //customActions.intakeForward,
                                 customActions.stopDrive,

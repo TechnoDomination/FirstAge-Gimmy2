@@ -82,26 +82,19 @@ public class CustomActions {
         }
     };
 
-    public Action shootFront = new Action() {
+    public Action shootFrontRed = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOCLOSE;
+            shooter.state = Shooter.State.AUTOCLOSERED;
 
             return !shooter.isVelReached;
         }
     };
-    public Action shootMiddle = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOMIDDLE;
 
-            return !shooter.isVelReached;
-        }
-    };
-    public Action shootFar = new Action() {
+    public Action shootFrontBlue = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.AUTOFAR;
+            shooter.state = Shooter.State.AUTOCLOSEBLUE;
 
             return !shooter.isVelReached;
         }
@@ -110,7 +103,25 @@ public class CustomActions {
     public Action shootMiddleBlue = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            shooter.state = Shooter.State.SHOOTMIDBLUE;
+            shooter.state = Shooter.State.AUTOMIDDLEBLUE;
+
+            return !shooter.isVelReached;
+        }
+    };
+
+    public Action shootMiddleRed = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shooter.state = Shooter.State.AUTOMIDDLERED;
+
+            return !shooter.isVelReached;
+        }
+    };
+
+    public Action shootFar = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shooter.state = Shooter.State.AUTOFAR;
 
             return !shooter.isVelReached;
         }

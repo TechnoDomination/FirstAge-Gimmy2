@@ -49,7 +49,7 @@ public class AutoRedBackWall extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootMiddle,
+                                customActions.shootMiddleRed,
                                 new SleepAction(2),
                                 Positions.MoveForward.runToExact,
                                 customActions.stopDrive,

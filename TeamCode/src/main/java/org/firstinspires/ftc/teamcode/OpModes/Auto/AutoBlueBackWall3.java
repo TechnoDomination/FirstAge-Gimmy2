@@ -21,8 +21,8 @@ import org.firstinspires.ftc.teamcode.Util.Positions;
 @Autonomous(name = "AutoBlueBackWallMiddle", group = "Autonomous")
 public class AutoBlueBackWall3 extends LinearOpMode {
 
-    Double hopperUpTime = 1.0;
-    Double hopperDownTime = 2.0;
+    Double hopperUpTime = 0.5;
+    Double hopperDownTime = 1.0;
     Double driveTime = 1.0;
 
     @Override
@@ -58,12 +58,13 @@ public class AutoBlueBackWall3 extends LinearOpMode {
 
                         new SequentialAction(
                                 customActions.intakeForward,
-                                customActions.shootMiddle,
+                                customActions.shootMiddleBlue,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlueMiddle.runToExact,
                                 customActions.stopDrive,
                                 Positions.ShootingPositionsBlueMiddleTurn.runToExact,
                                 customActions.stopDrive,
+                                new SleepAction(driveTime),
                                 customActions.hopperUp,
                                 new SleepAction(hopperUpTime),
                                 customActions.hopperDown,
@@ -78,11 +79,39 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 new SleepAction(hopperDownTime),
                                 Positions.BlueIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                //new SleepAction(driveTime),
                                 customActions.slowIntake,
                                 Positions.BlueIntakeTape3End.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
+                                Positions.BlueIntakeTape3Start.runToExact,
+                                customActions.stopDrive,
+                                //new SleepAction(driveTime),
+                                Positions.ShootingPositionsBlueMiddleTurn.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(driveTime),
+                                customActions.hopperUp,
+                                new SleepAction(hopperUpTime),
+                                customActions.hopperDown,
+                                new SleepAction(hopperDownTime),
+                                customActions.hopperUp,
+                                new SleepAction(hopperUpTime),
+                                customActions.hopperDown,
+                                new SleepAction(hopperDownTime),
+                                customActions.hopperUp,
+                                new SleepAction(hopperUpTime),
+                                customActions.hopperDown,
+                                new SleepAction(hopperDownTime),
+                                Positions.BlueIntakeTape2MidStart.runToExact,
+                                customActions.stopDrive,
+                                //new SleepAction(driveTime),
+                                customActions.slowIntake,
+                                Positions.BlueIntakeTape2MidEnd.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(driveTime),
+                                Positions.BlueIntakeTape2MidStart.runToExact,
+                                customActions.stopDrive,
+                                //new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlueMiddleTurn.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),

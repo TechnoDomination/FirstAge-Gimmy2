@@ -58,7 +58,7 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
 
 
                         new SequentialAction(
-                                customActions.shootFront,
+                                customActions.shootFrontBlue,
                                 customActions.intakeForward,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlue.runToExact,
@@ -101,6 +101,9 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                                 new SleepAction(driveTime),
                                 customActions.slowIntake,
                                 Positions.BlueIntakeTape2End.runToExact,
+                                customActions.stopDrive,
+                                new SleepAction(driveTime),
+                                Positions.BlueIntakeTape2Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlue.runToExact,

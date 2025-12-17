@@ -53,7 +53,7 @@ public class AutoStartBlueGoal2 extends LinearOpMode {
 
 
                         new SequentialAction(
-                                customActions.shootFront,
+                                customActions.shootFrontBlue,
                                 customActions.intakeForward,
                                 new SleepAction(1.5),
                                 Positions.ShootingPositionsBlue.runToExact,
