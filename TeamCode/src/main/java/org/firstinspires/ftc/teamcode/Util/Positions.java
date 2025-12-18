@@ -48,6 +48,7 @@ public enum Positions {
     NewEndingBlue(new Vector2d(-20,-30), PI*-0.25),
     ShootingPositionsBlueMiddle(new Vector2d(-12, 15), 0.0),
     ShootingPositionsBlueMiddleTurn(new Vector2d(-12, 15), PI*-0.225),
+    NewShootingPositionsBlueMiddleTurn(new Vector2d(-12, 15), PI*-0.25),
 
     MoveForward(new Vector2d(30,  0), 0.0),
     NewMoveForward(new Vector2d(12,  -46), 0.0),

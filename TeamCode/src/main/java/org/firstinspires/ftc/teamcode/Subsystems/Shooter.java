@@ -74,27 +74,27 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(690);
+                setVelocityRPM(3200);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(670);
+                setVelocityRPM(3200);
                 break;
             case CLOSE:
-                setVelocityRPM(750);
+                setVelocityRPM(3200);
                 break;
             case AUTOMIDDLERED:
-                setVelocityRPM(785);
+                setVelocityRPM(3550);
                 break;
             case AUTOMIDDLEBLUE:
-                setVelocityRPM(785);
+                setVelocityRPM(3500);
                 break;
             case MIDDLE:
-                setVelocityRPM(820);
+                setVelocityRPM(3650);
                 break;
             case FAR:
-                setVelocityRPM(1400);
+                setVelocityRPM(4600);
             case AUTOFAR:
-                setVelocityRPM(1400);
+                setVelocityRPM(4600);
             case REST:
                 ShooterMotorLeft.setPower(0);
                 break;

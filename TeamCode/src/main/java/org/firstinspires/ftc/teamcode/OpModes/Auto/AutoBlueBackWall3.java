@@ -62,7 +62,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlueMiddle.runToExact,
                                 customActions.stopDrive,
-                                Positions.ShootingPositionsBlueMiddleTurn.runToExact,
+                                Positions.NewShootingPositionsBlueMiddleTurn.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.hopperUp,
