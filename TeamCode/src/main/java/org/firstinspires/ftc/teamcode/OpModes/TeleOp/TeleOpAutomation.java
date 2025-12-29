@@ -92,15 +92,17 @@ public class TeleOpAutomation extends LinearOpMode {
             }
             if (gamepad1.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
-                shooter.state = Shooter.State.MIDDLE;
-
+               // shooter.state = Shooter.State.MIDDLE;
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(80));
             }
             if (gamepad1.y) {
                 //shooter.setVelocityRPM(3100);
-                shooter.state = Shooter.State.CLOSE;
+               // shooter.state = Shooter.State.CLOSE;
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
             }
             if (gamepad1.x) {
-                shooter.state = Shooter.State.FAR; //setPower(0.7)
+               // shooter.state = Shooter.State.FAR; //setPower(0.7)
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(130));
             }
             if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
