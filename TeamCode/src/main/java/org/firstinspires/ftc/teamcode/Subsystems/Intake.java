@@ -58,7 +58,7 @@ public class Intake {
                 IntakeMotor.setPower(0);
                 break;
             case FORWARD:
-                setVelocityRPM(2000);
+                setVelocityRPM(1000);
                 break;
             case BACKWARD:
                 setVelocityRPM(-1000);

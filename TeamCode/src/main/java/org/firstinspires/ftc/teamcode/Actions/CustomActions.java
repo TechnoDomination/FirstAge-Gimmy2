@@ -127,6 +127,24 @@ public class CustomActions {
         }
     };
 
+    public Action shootFarBlue = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shooter.state = Shooter.State.AUTOFARBLUE;
+
+            return !shooter.isVelReached;
+        }
+    };
+
+    public Action shootFarRed = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            shooter.state = Shooter.State.AUTOFARRED;
+
+            return !shooter.isVelReached;
+        }
+    };
+
 
     public Action shootBack = new Action() {
         @Override

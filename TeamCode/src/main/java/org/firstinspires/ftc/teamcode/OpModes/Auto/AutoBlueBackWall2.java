@@ -53,7 +53,7 @@ public class AutoBlueBackWall2 extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootFar,
+                                customActions.shootFarBlue,
                                 customActions.intakeForward,
                                 new SleepAction(1),
                                 Positions.NewTurningBlue.runToExact,

@@ -15,11 +15,13 @@ public class Shooter {
     public static Shooter instance;
     public State state = State.REST;
     public boolean isTargetReached = false;
+    public double targetRPM = 0.0;
+    public double targetVelocityTPS = 0.0;
     public DcMotorEx ShooterMotorLeft;
     public DcMotorEx ShooterMotorRight;
     DcMotorEx motorExLeft;
     public boolean isVelReached = true;
-    public static final double NEW_P = 60.0;
+    public static final double NEW_P = 65.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
     public static final double NEW_F = 0.000357;
@@ -30,7 +32,7 @@ public class Shooter {
         //ShooterMotorRight = hardwareMap.get(DcMotorEx.class, "ShooterMotorRight");
         ShooterMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //ShooterMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ShooterMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        ShooterMotorLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         //ShooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         ShooterMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ShooterMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -38,10 +40,13 @@ public class Shooter {
         instance = this;
     }
 
+
+
     public void setVelocityRPM(double targetRPM) {
         // Prevent setting a velocity above the motor's capability.
         // Convert RPM to ticks per second.
-        double targetVelocityTPS = (targetRPM / 60) * 28;
+        this.targetRPM = targetRPM;
+        targetVelocityTPS = (targetRPM / 60) * 28;
         ShooterMotorLeft.setVelocity(targetVelocityTPS);
         //ShooterMotorRight.setVelocity(targetVelocityTPS);
     }
@@ -65,6 +70,8 @@ public class Shooter {
         MIDDLE,
         FAR,
         AUTOFAR,
+        AUTOFARRED,
+        AUTOFARBLUE,
         REST,
         SHOOTMID,
         SHOOTMIDBLUE,
@@ -93,6 +100,10 @@ public class Shooter {
                 break;
             case FAR:
                 setVelocityRPM(4600);
+            case AUTOFARRED:
+                setVelocityRPM(5000);
+            case AUTOFARBLUE:
+                setVelocityRPM(5000);
             case AUTOFAR:
                 setVelocityRPM(4600);
             case REST:
@@ -137,7 +148,10 @@ public class Shooter {
 
         public String getShooterTelemetry(){
             String telemetry = "";
-            telemetry = telemetry + "\n Shooter Velocity = " + ShooterMotorLeft.getVelocity();
+            telemetry = telemetry + "\n Shooter Target Velocity = " + targetVelocityTPS;
+            telemetry = telemetry + "\n Shooter Target Motor RPM = " + targetRPM;
+            telemetry = telemetry + "\n Shooter Actual Velocity = " + ShooterMotorLeft.getVelocity();
+            telemetry = telemetry + "\n Shooter Actual Motor RPM = " + ((ShooterMotorLeft.getVelocity()/28) * 60);
             telemetry = telemetry + "\n Shooter State = " + state;
             telemetry = telemetry + "\n ";
             return telemetry;
