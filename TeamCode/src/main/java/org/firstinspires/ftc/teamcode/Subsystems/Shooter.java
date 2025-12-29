@@ -42,7 +42,13 @@ public class Shooter {
 
     public static double ShooterPowerDistance(double distanceFromGoal) {
 
-        return (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
+        double setRPMdistance = (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
+
+        if (setRPMdistance > 0) {
+            return setRPMdistance;
+        } else {
+            return 0;
+        }
     }
 
 

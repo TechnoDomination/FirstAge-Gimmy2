@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@TeleOp(name = "TeleOpTwo", group = "TeleOp")
+@TeleOp(name = "TwoGamepadTeleOp", group = "TeleOp")
 public class TeleOpAutomationTwo extends LinearOpMode {
 
 
