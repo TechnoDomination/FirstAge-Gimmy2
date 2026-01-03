@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 @Autonomous(name = "AutoBlueGoal", group = "Autonomous")
 public class AutoStartBlueGoal extends LinearOpMode {
@@ -26,8 +27,11 @@ public class AutoStartBlueGoal extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        limelightHelper.setAlliance(false);
 
-       // customActions.update();
+
+        // customActions.update();
 
         waitForStart();
 
@@ -49,7 +53,7 @@ public class AutoStartBlueGoal extends LinearOpMode {
 
 
                         new SequentialAction(
-                                customActions.shootFront,
+                                customActions.shootFrontBlue,
                                 new SleepAction(1),
                                 Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,

@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Util.Positions;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 @Autonomous(name = "AutoRedBackWallMiddle", group = "Autonomous")
 public class AutoRedBackWall3 extends LinearOpMode {
@@ -24,7 +25,6 @@ public class AutoRedBackWall3 extends LinearOpMode {
     Double hopperUpTime = 0.5;
     Double hopperDownTime = 1.0;
     Double driveTime = 1.0;
-
     @Override
     public void runOpMode() {
 
@@ -34,10 +34,13 @@ public class AutoRedBackWall3 extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        limelightHelper.setAlliance(true);
 
 
 
-     //   customActions.update();
+
+        //   customActions.update();
 
         waitForStart();
 

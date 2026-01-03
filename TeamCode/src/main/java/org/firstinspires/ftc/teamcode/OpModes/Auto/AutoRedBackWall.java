@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 @Autonomous(name = "AutoRedBackWall", group = "Autonomous")
 public class AutoRedBackWall extends LinearOpMode {
@@ -27,6 +28,8 @@ public class AutoRedBackWall extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        limelightHelper.setAlliance(true);
 
      //   customActions.update();
 

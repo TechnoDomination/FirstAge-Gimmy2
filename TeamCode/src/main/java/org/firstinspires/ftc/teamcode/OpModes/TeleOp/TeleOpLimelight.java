@@ -2,31 +2,33 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.robot.RobotState;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
-
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-@TeleOp(name = "TeleOp", group = "TeleOp")
-public class TeleOpAutomation extends LinearOpMode {
+@TeleOp(name = "TeleOpLimelight", group = "TeleOp")
+public class TeleOpLimelight extends LinearOpMode {
 
 
     private List<Action> runningActions = new ArrayList<>();
@@ -55,6 +57,8 @@ public class TeleOpAutomation extends LinearOpMode {
         CustomActions customActions = new CustomActions(hardwareMap);
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -66,7 +70,7 @@ public class TeleOpAutomation extends LinearOpMode {
             intake.update();
             telemetry.update();
 
-            //double distance = distanceSensor.getDistance(DistanceUnit.CM);
+           // double distance = distanceSensor.getDistance(DistanceUnit.CM);
             double distance = getFilteredDistance();
             if (distance <= 10) {
                 rgblight.setPosition(0.7);
@@ -74,10 +78,16 @@ public class TeleOpAutomation extends LinearOpMode {
                 rgblight.setPosition(0);
             }
 
-            if (!isStarted){
+            limelightHelper.isReadyToShoot();
+            telemetry.addData("limelight: ", limelightHelper.getLimelightTelemetry());
+            telemetry.addData("started ", "now");
+            telemetry.update();
+
+            if (!isStarted) {
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
                 intake.state = Intake.State.FORWARD;
             }
 
@@ -93,9 +103,9 @@ public class TeleOpAutomation extends LinearOpMode {
             if (gamepad1.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
                // shooter.state = Shooter.State.MIDDLE;
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(80));
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
             }
-            if (gamepad1.y) {
+            /*if (gamepad1.y) {
                 //shooter.setVelocityRPM(3100);
                // shooter.state = Shooter.State.CLOSE;
                 shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
@@ -103,7 +113,7 @@ public class TeleOpAutomation extends LinearOpMode {
             if (gamepad1.x) {
                // shooter.state = Shooter.State.FAR; //setPower(0.7)
                 shooter.setVelocityRPM(shooter.ShooterPowerDistance(130));
-            }
+            }*/
             if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
             }
@@ -116,7 +126,6 @@ public class TeleOpAutomation extends LinearOpMode {
             if (gamepad1.dpad_right) {
                 intake.state = Intake.State.REST;
             }
-
 
 
 
@@ -162,7 +171,10 @@ public class TeleOpAutomation extends LinearOpMode {
                 ));
             }
         }
+
+        limelightHelper.stopLimelight();
     }
+
 
     private double getFilteredDistance() {
         final int filter_count = 2;
@@ -176,5 +188,6 @@ public class TeleOpAutomation extends LinearOpMode {
         double averageDistance = totalDistance / filter_count;
 
         return averageDistance;
+
     }
 }
