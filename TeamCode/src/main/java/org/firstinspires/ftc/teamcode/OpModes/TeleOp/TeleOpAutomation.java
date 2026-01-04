@@ -157,7 +157,7 @@ public class TeleOpAutomation extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 runningActions.add(new SequentialAction(
                    customActions.hopperUp,
-                   new SleepAction(0.5),
+                   new SleepAction(0.15),
                    customActions.hopperDown
                 ));
             }
