@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Actions.P2P;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
@@ -34,6 +35,7 @@ public class AutoStartRedGoal2 extends LinearOpMode {
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         limelightHelper.setAlliance(true);
+        AllianceManager alliance = new AllianceManager();
 
 
         //customActions.update();
@@ -45,6 +47,8 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
+                            alliance.redAlliance();
+                            alliance.offBlueAlliance();
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -29,6 +30,7 @@ public class AutoStartBlueGoal extends LinearOpMode {
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         limelightHelper.setAlliance(false);
+        AllianceManager alliance = new AllianceManager();
 
 
         // customActions.update();
@@ -40,6 +42,8 @@ public class AutoStartBlueGoal extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
+                            alliance.blueAlliance();
+                            alliance.offRedAlliance();
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());
@@ -57,18 +61,30 @@ public class AutoStartBlueGoal extends LinearOpMode {
                                 new SleepAction(1),
                                 Positions.ShootingPositionsBlue.runToExact,
                                 customActions.stopDrive,
-                                new SleepAction(3),
+                                customActions.stopIntake,
+                                new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(1),
+                                new SleepAction(0.15),
+                                customActions.hopperDown,
+                                new SleepAction(0.35),
+                                customActions.intakeFeed,
+                                new SleepAction(.5),
+                                //customActions.stopIntake,
+                                //new SleepAction(0.1),
+                                customActions.hopperUp,
+                                new SleepAction(0.15),
+                                customActions.hopperDown,
+                                new SleepAction(0.35),
+                                // customActions.intakeFeed,
+                                // new SleepAction(1),
+                                //customActions.stopIntake,
+                                //new SleepAction(0.1),
+                                customActions.hopperUp,
+                                new SleepAction(0.15),
                                 customActions.hopperDown,
                                 new SleepAction(2),
-                                customActions.hopperUp,
-                                new SleepAction(1),
-                                customActions.hopperDown,
-                                new SleepAction(2),
-                                customActions.hopperUp,
-                                new SleepAction(1),
-                                customActions.hopperDown,
+
+                                customActions.intakeForward,
                                 new SleepAction(2),
                                 Positions.ParkPositionsBlue.runToExact,
                                 customActions.stopDrive,

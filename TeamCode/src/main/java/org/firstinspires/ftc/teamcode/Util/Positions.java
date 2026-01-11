@@ -31,7 +31,7 @@ public enum Positions {
 
     //Auto Blue Goal - LOCALIZER = x:-47.4, y:56.3, rotation:-PI*0.95
     MoveRightBlueGoal(new Vector2d(-13 , 55.8), 0.0),
-    ShootingPositionsBlue(new Vector2d(-20, 15), PI*-0.25),
+    ShootingPositionsBlue(new Vector2d(-20, 12), PI*-0.25),
     BlueIntakeTape1Start(new Vector2d(-25, -5), PI*-0.5),
     BlueIntakeTape1End(new Vector2d(-49.5, -5), PI*-0.5),
     BlueIntakeTape2Start(new Vector2d(-25, -30), PI*-0.5),

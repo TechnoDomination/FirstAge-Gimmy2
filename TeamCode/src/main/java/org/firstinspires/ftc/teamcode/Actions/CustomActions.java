@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -28,6 +29,7 @@ public class CustomActions {
         hopper.update();
         shooter.update();
         intake.update();
+
     }
 
     public Action timerReset = new Action() {
@@ -77,6 +79,15 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             intake.state = Intake.State.FORWARD;
+
+            return !intake.isTargetReached;
+        }
+    };
+
+    public Action intakeFeed = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.state = Intake.State.FEED;
 
             return !intake.isTargetReached;
         }

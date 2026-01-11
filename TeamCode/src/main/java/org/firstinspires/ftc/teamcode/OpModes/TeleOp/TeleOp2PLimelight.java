@@ -5,16 +5,11 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.robot.RobotState;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -22,13 +17,15 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "TeleOpLimelight", group = "TeleOp")
-public class TeleOpLimelight extends LinearOpMode {
+@TeleOp(name = "TeleOp 2P Limelight", group = "TeleOp")
+public class TeleOp2PLimelight extends LinearOpMode {
 
 
     private List<Action> runningActions = new ArrayList<>();
@@ -52,21 +49,26 @@ public class TeleOpLimelight extends LinearOpMode {
 
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
+        ShooterHood shooterhood = new ShooterHood(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
 
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
+        /* if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
+            allianceManager.isBlueAlliance = true;
+        }*/
 
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
-            //shooter.update();
+            shooterhood.update();
             intake.update();
             telemetry.update();
 
@@ -79,8 +81,9 @@ public class TeleOpLimelight extends LinearOpMode {
             }
 
             limelightHelper.isReadyToShoot();
-            telemetry.addData("limelight: ", limelightHelper.getLimelightTelemetry());
-            telemetry.addData("started ", "now");
+            telemetry.addData("limelight telemetry: ", limelightHelper.getLimelightTelemetry());
+            telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
+            telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.update();
 
             if (!isStarted) {
@@ -88,32 +91,37 @@ public class TeleOpLimelight extends LinearOpMode {
                 hopper.state = Hopper.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
                 shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
+                //shooter.setVelocityRPM(1000);
                 intake.state = Intake.State.FORWARD;
             }
 
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
 
 
-
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 shooter.stopMotor();
                 //shooter.state = Shooter.State.REST;
             }
-            if (gamepad1.b) {
+            if (gamepad2.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
-               // shooter.state = Shooter.State.MIDDLE;
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
+                shooter.state = Shooter.State.MIDDLE;
+                //shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
             }
-            /*if (gamepad1.y) {
+            if (gamepad2.y) {
                 //shooter.setVelocityRPM(3100);
-               // shooter.state = Shooter.State.CLOSE;
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
+                shooter.state = Shooter.State.CLOSE;
+                //shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
+            }
+            if (gamepad2.x) {
+                 shooter.state = Shooter.State.FAR; //setPower(0.7)
             }
             if (gamepad1.x) {
                // shooter.state = Shooter.State.FAR; //setPower(0.7)
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(130));
-            }*/
+                //limelightHelper.stopLimelight();
+                shooter.update();
+            }
             if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
             }
@@ -128,7 +136,7 @@ public class TeleOpLimelight extends LinearOpMode {
             }
 
 
-
+        /*
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
             //telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
@@ -139,11 +147,13 @@ public class TeleOpLimelight extends LinearOpMode {
             telemetry.addData("deviceName", distanceSensor.getDeviceName());
             telemetry.addData("range", distanceSensor.getDistance(DistanceUnit.CM));
             telemetry.update();
+            */
+
             //hopper
           /*  if (gamepad1.right_bumper) {
                     hopper.state = Hopper.State.UP;
             }*/
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 hopper.state = Hopper.State.DOWN;
             }
 
@@ -163,11 +173,28 @@ public class TeleOpLimelight extends LinearOpMode {
             }
             runningActions = newActions;
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 runningActions.add(new SequentialAction(
-                   customActions.hopperUp,
-                   new SleepAction(0.5),
-                   customActions.hopperDown
+                        customActions.stopIntake,
+                        new SleepAction(0.25),
+                        customActions.hopperUp,
+                        new SleepAction(0.15),
+                        customActions.hopperDown,
+                        new SleepAction(0.35),
+                        customActions.intakeFeed,
+                        new SleepAction(.5),
+                        //customActions.stopIntake,
+                        //new SleepAction(0.1),
+                        customActions.hopperUp,
+                        new SleepAction(0.15),
+                        customActions.hopperDown,
+                        new SleepAction(0.75),
+                        customActions.hopperUp,
+                        new SleepAction(0.15),
+                        customActions.hopperDown,
+                        new SleepAction(2),
+
+                        customActions.intakeForward
                 ));
             }
         }

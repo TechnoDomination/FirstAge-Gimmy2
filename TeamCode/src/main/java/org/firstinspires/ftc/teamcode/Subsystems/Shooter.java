@@ -21,10 +21,10 @@ public class Shooter {
     public DcMotorEx ShooterMotorRight;
     DcMotorEx motorExLeft;
     public boolean isVelReached = true;
-    public static final double NEW_P = 65.0;
+    public static final double NEW_P = 95.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
-    public static final double NEW_F = 0.000357;
+    public static final double NEW_F = 0.000657;
     PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
     public Shooter(HardwareMap hardwareMap) {
@@ -47,7 +47,7 @@ public class Shooter {
         if (setRPMdistance > 0) {
             return setRPMdistance;
         } else {
-            return 0;
+            return 2000;
         }
     }
 
@@ -68,13 +68,14 @@ public class Shooter {
     }
 
     public void setPower() {
-        ShooterMotorLeft.setPower(0.75);
+        ShooterMotorLeft.setPower(1.0);
     }
 
     public enum State {
         AUTOCLOSERED,
         AUTOCLOSEBLUE,
         CLOSE,
+        TOOCLOSE,
         AUTOMIDDLERED,
         AUTOMIDDLEBLUE,
         MIDDLE,
@@ -91,13 +92,16 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3200);
+                setVelocityRPM(3400);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3200);
+                setVelocityRPM(3400);
                 break;
             case CLOSE:
                 setVelocityRPM(3200);
+                break;
+            case TOOCLOSE:
+                setVelocityRPM(2800);
                 break;
             case AUTOMIDDLERED:
                 setVelocityRPM(3550);
@@ -106,10 +110,11 @@ public class Shooter {
                 setVelocityRPM(3500);
                 break;
             case MIDDLE:
-                setVelocityRPM(3650);
+                setVelocityRPM(3600);
                 break;
             case FAR:
-                setVelocityRPM(4600);
+                setVelocityRPM(5000);
+                break;
             case AUTOFARRED:
                 setVelocityRPM(5000);
             case AUTOFARBLUE:
