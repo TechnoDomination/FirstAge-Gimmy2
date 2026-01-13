@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -16,8 +17,10 @@ public class CustomActions {
     Shooter shooter = Shooter.instance;
     Hopper hopper = Hopper.instance;
     Intake intake = Intake.instance;
+    ShooterHood shooterHood = ShooterHood.instance;
     public Drive drive = Drive.instance;
     public static CustomActions instance;
+
     P2P p2p = new P2P(new Vector2d(0,0), 0);
 
     public CustomActions(HardwareMap hardwareMap) {
@@ -29,6 +32,7 @@ public class CustomActions {
         hopper.update();
         shooter.update();
         intake.update();
+        shooterHood.update();
 
     }
 
@@ -97,6 +101,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSERED;
+            shooterHood.state = ShooterHood.State.CLOSE;
 
             return !shooter.isVelReached;
         }
@@ -106,6 +111,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSEBLUE;
+            shooterHood.state = ShooterHood.State.CLOSE;
 
             return !shooter.isVelReached;
         }
@@ -115,6 +121,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOMIDDLEBLUE;
+            shooterHood.state = ShooterHood.State.MIDDLE;
 
             return !shooter.isVelReached;
         }
@@ -124,6 +131,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOMIDDLERED;
+            shooterHood.state = ShooterHood.State.MIDDLE;
 
             return !shooter.isVelReached;
         }
@@ -142,6 +150,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARBLUE;
+            shooterHood.state = ShooterHood.State.FAR;
 
             return !shooter.isVelReached;
         }
@@ -151,6 +160,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARRED;
+            shooterHood.state = ShooterHood.State.FAR;
 
             return !shooter.isVelReached;
         }

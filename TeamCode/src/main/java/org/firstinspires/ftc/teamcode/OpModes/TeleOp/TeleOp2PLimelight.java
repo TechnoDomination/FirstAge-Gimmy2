@@ -36,6 +36,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
     double velocityA;
     double velocityY;
     double velocityX;
+    double shooterPowerDistance = 0.0;
 
     public Servo rgblight = null;
     private DistanceSensor distanceSensor;
@@ -49,7 +50,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
 
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
-        ShooterHood shooterhood = new ShooterHood(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
@@ -60,15 +61,15 @@ public class TeleOp2PLimelight extends LinearOpMode {
 
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
-        /* if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
-            allianceManager.isBlueAlliance = true;
-        }*/
+        if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
+            allianceManager.isRedAlliance = true;
+        }
 
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
-            shooterhood.update();
+            shooterHood.update();
             intake.update();
             telemetry.update();
 
@@ -80,7 +81,10 @@ public class TeleOp2PLimelight extends LinearOpMode {
                 rgblight.setPosition(0);
             }
 
+
+
             limelightHelper.isReadyToShoot();
+            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
             telemetry.addData("limelight telemetry: ", limelightHelper.getLimelightTelemetry());
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
@@ -93,11 +97,26 @@ public class TeleOp2PLimelight extends LinearOpMode {
                 shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
                 //shooter.setVelocityRPM(1000);
                 intake.state = Intake.State.FORWARD;
+                shooterHood.state = ShooterHood.State.MIDDLE;
             }
 
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
+            shooter.setVelocityRPM(shooterPowerDistance);
+
+
+            if (shooterPowerDistance < 4000){
+                shooterHood.state = ShooterHood.State.DOWN;
+                //shooter.state = Shooter.State.CLOSE;
+            } else if (shooterPowerDistance >= 4000 && shooterPowerDistance < 7200) {
+                shooterHood.state = ShooterHood.State.CLOSE;
+            }else if (shooterPowerDistance >= 7200 && shooterPowerDistance < 9500) {
+                shooterHood.state = ShooterHood.State.MIDDLE;
+                //shooter.state = Shooter.State.MIDDLE;
+            } else {
+                shooterHood.state = ShooterHood.State.UP;
+                //shooter.state = Shooter.State.FAR;
+            }
 
 
             if (gamepad2.a) {
@@ -178,7 +197,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
                         customActions.stopIntake,
                         new SleepAction(0.25),
                         customActions.hopperUp,
-                        new SleepAction(0.15),
+                        new SleepAction(0.35),
                         customActions.hopperDown,
                         new SleepAction(0.35),
                         customActions.intakeFeed,
@@ -186,13 +205,12 @@ public class TeleOp2PLimelight extends LinearOpMode {
                         //customActions.stopIntake,
                         //new SleepAction(0.1),
                         customActions.hopperUp,
-                        new SleepAction(0.15),
+                        new SleepAction(0.35),
                         customActions.hopperDown,
-                        new SleepAction(0.75),
+                        new SleepAction(0.35),
                         customActions.hopperUp,
-                        new SleepAction(0.15),
+                        new SleepAction(0.35),
                         customActions.hopperDown,
-                        new SleepAction(2),
 
                         customActions.intakeForward
                 ));

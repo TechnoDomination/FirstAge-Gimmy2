@@ -19,6 +19,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
     double velocityA;
     double velocityY;
     double velocityX;
+    double shooterPowerDistance = 0.0;
 
     public Servo rgblight = null;
     private DistanceSensor distanceSensor;
@@ -51,9 +55,12 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
+        LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -63,6 +70,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             hopper.update();
             //shooter.update();
             //intake.update();
+            shooterHood.update();
             telemetry.update();
 
             //double distance = distanceSensor.getDistance(DistanceUnit.CM);
@@ -73,18 +81,44 @@ public class ShooterTestingTeleOp extends LinearOpMode {
                 rgblight.setPosition(0);
             }
 
+            if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
+                allianceManager.isRedAlliance = true;
+            }
+
+            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
+            limelightHelper.isReadyToShoot();
+            telemetry.addData("limelight telemetry: ", limelightHelper.getLimelightTelemetry());
+            telemetry.addData("Shooter Power Distance: ", shooterPowerDistance);
+            telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
+            telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
+            telemetry.update();
+
             if (!isStarted){
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
-                shooter.setPower();
+                shooter.setVelocityRPM(shooterPowerDistance);
+                //shooter.setPower();
                 intake.state = Intake.State.FORWARD;
+                shooterHood.state = ShooterHood.State.FAR;
             }
 
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            shooter.setVelocityRPM(shooterPowerDistance);
 
-
+            if (shooterPowerDistance < 4000){
+                shooterHood.state = ShooterHood.State.DOWN;
+                //shooter.state = Shooter.State.CLOSE;
+            } else if (shooterPowerDistance >= 4000 && shooterPowerDistance < 7200) {
+                shooterHood.state = ShooterHood.State.CLOSE;
+            }else if (shooterPowerDistance >= 7200 && shooterPowerDistance < 9500) {
+                shooterHood.state = ShooterHood.State.MIDDLE;
+                //shooter.state = Shooter.State.MIDDLE;
+            } else {
+                shooterHood.state = ShooterHood.State.UP;
+                //shooter.state = Shooter.State.FAR;
+            }
 
             if (gamepad1.a) {
                 //shooter.stopMotor();
@@ -116,15 +150,15 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             }
 
             if (gamepad2.dpad_up) {
-                shooter.setVelocityRPM(shooter.targetRPM + 100);
+                shooter.setVelocityRPM(shooter.targetRPM + 50);
             }
             if (gamepad2.dpad_down) {
-                shooter.setVelocityRPM(shooter.targetRPM - 100);
+                shooter.setVelocityRPM(shooter.targetRPM - 50);
             }
 
 
 
-
+/*
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
             //telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
@@ -135,6 +169,8 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             telemetry.addData("deviceName", distanceSensor.getDeviceName());
             telemetry.addData("range", distanceSensor.getDistance(DistanceUnit.CM));
             telemetry.update();
+
+ */
             //hopper
           /*  if (gamepad1.right_bumper) {
                     hopper.state = Hopper.State.UP;

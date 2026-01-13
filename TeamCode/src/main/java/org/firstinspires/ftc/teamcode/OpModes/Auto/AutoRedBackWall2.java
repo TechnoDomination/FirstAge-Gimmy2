@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -31,6 +32,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         AllianceManager alliance = new AllianceManager();
@@ -69,7 +71,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(0.35),
                                 customActions.intakeFeed,
@@ -77,17 +79,12 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 //customActions.stopIntake,
                                 //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(0.75),
-                                // customActions.intakeFeed,
-                                // new SleepAction(1),
-                                //customActions.stopIntake,
-                                //new SleepAction(0.1),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(1),
                                 Positions.RedIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(1),
@@ -101,7 +98,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(0.35),
                                 customActions.intakeFeed,
@@ -109,17 +106,12 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 //customActions.stopIntake,
                                 //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(0.75),
-                                // customActions.intakeFeed,
-                                // new SleepAction(1),
-                                //customActions.stopIntake,
-                                //new SleepAction(0.1),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(1),
                                 Positions.NewEndingRed.runToExact,
                                 customActions.stopDrive,
                                 customActions.stopShooter,

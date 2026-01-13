@@ -82,7 +82,7 @@ public class TeleOp1PManual extends LinearOpMode {
                 hopper.state = Hopper.State.DOWN;
                 shooter.state = Shooter.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
-                shooterhood.state = ShooterHood.State.UP;
+                shooterhood.state = ShooterHood.State.MIDDLE;
             }
 
 
@@ -105,7 +105,7 @@ public class TeleOp1PManual extends LinearOpMode {
             if (gamepad1.y) {
                 //shooter.setVelocityRPM(3100);
                 shooter.state = Shooter.State.CLOSE;
-                shooterhood.state = ShooterHood.State.MIDDLE;
+                shooterhood.state = ShooterHood.State.UP;
                // shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
             }
             if (gamepad1.x) {

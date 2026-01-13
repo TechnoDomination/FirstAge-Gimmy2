@@ -20,6 +20,7 @@ public class Shooter {
     public DcMotorEx ShooterMotorLeft;
     public DcMotorEx ShooterMotorRight;
     DcMotorEx motorExLeft;
+    public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
     public static final double NEW_P = 95.0;
     public static final double NEW_I = 0.0;
@@ -40,9 +41,11 @@ public class Shooter {
         instance = this;
     }
 
-    public static double ShooterPowerDistance(double distanceFromGoal) {
+    public double ShooterPowerDistance(double distanceFromGoal) {
 
-        double setRPMdistance = (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
+        //setRPMdistance = (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
+        //y=-0.00144221x^{3}+0.577479x^{2}-58.38114x+4656.98818
+        setRPMdistance = (-0.00144221 * Math.pow(distanceFromGoal, 3)) + (0.577479 * Math.pow(distanceFromGoal, 2)) - (58.38114 * distanceFromGoal) + 4656.98818;
 
         if (setRPMdistance > 0) {
             return setRPMdistance;
@@ -86,16 +89,18 @@ public class Shooter {
         REST,
         SHOOTMID,
         SHOOTMIDBLUE,
-        SHOOTBACK
+        SHOOTBACK,
+        TestClose,
+        TestMid
     }
 
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3400);
+                setVelocityRPM(3200);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3400);
+                setVelocityRPM(3200);
                 break;
             case CLOSE:
                 setVelocityRPM(3200);
@@ -104,13 +109,13 @@ public class Shooter {
                 setVelocityRPM(2800);
                 break;
             case AUTOMIDDLERED:
-                setVelocityRPM(3550);
+                setVelocityRPM(3400);
                 break;
             case AUTOMIDDLEBLUE:
-                setVelocityRPM(3500);
+                setVelocityRPM(3400);
                 break;
             case MIDDLE:
-                setVelocityRPM(3600);
+                setVelocityRPM(3500);
                 break;
             case FAR:
                 setVelocityRPM(5000);
@@ -165,6 +170,7 @@ public class Shooter {
             String telemetry = "";
             telemetry = telemetry + "\n Shooter Target Velocity = " + targetVelocityTPS;
             telemetry = telemetry + "\n Shooter Target Motor RPM = " + targetRPM;
+            telemetry = telemetry + "\n LL calculated RPMdistance = " + setRPMdistance;
             telemetry = telemetry + "\n Shooter Actual Velocity = " + ShooterMotorLeft.getVelocity();
             telemetry = telemetry + "\n Shooter Actual Motor RPM = " + ((ShooterMotorLeft.getVelocity()/28) * 60);
             telemetry = telemetry + "\n Shooter State = " + state;

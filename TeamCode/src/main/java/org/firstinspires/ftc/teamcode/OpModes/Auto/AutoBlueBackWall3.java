@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
@@ -37,6 +38,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         limelightHelper.setAlliance(false);
@@ -74,7 +76,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(0.35),
                                 customActions.intakeFeed,
@@ -82,17 +84,12 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 //customActions.stopIntake,
                                 //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(0.75),
-                                // customActions.intakeFeed,
-                                // new SleepAction(1),
-                                //customActions.stopIntake,
-                                //new SleepAction(0.1),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(1),
 
                                // customActions.intakeForward,
                                 new SleepAction(hopperDownTime),
@@ -112,7 +109,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(0.35),
                                 customActions.intakeFeed,
@@ -120,17 +117,12 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 //customActions.stopIntake,
                                 //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(0.75),
-                                // customActions.intakeFeed,
-                                // new SleepAction(1),
-                                //customActions.stopIntake,
-                                //new SleepAction(0.1),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(1),
 
                                 //customActions.intakeForward,
                                 new SleepAction(1),
@@ -148,7 +140,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(0.35),
                                 customActions.intakeFeed,
@@ -156,15 +148,11 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 //customActions.stopIntake,
                                 //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(0.75),
-                                // customActions.intakeFeed,
-                                // new SleepAction(1),
-                                //customActions.stopIntake,
-                                //new SleepAction(0.1),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(0.15),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(1),
                                 Positions.NewEndingBlue.runToExact,

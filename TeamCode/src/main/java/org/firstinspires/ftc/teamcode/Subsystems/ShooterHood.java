@@ -9,7 +9,9 @@ public class ShooterHood {
     public boolean isTargetReached = false;
     public static ShooterHood instance;
     private final double upPos = 0.45;
-    private final double middlePos = 0.2;
+    private final double middlePos = 0.375;
+    private final double closePos = 0.325;
+    private final double farPos = 0.4;
     private final double downPos = 0.0;
 
     public enum State {
@@ -17,6 +19,8 @@ public class ShooterHood {
         DOWN,
         MIDDLE,
         REST,
+        CLOSE,
+        FAR
     }
 
     public ShooterHood (HardwareMap hardwareMap) {
@@ -34,6 +38,12 @@ public class ShooterHood {
                 break;
             case MIDDLE:
                 ShooterHood.setPosition(middlePos);
+                break;
+            case CLOSE:
+                ShooterHood.setPosition(closePos);
+                break;
+            case FAR:
+                ShooterHood.setPosition(farPos);
                 break;
             case REST:
                 ShooterHood.setPosition(downPos);
