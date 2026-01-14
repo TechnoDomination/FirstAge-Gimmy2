@@ -197,7 +197,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
                         customActions.stopIntake,
                         new SleepAction(0.25),
                         customActions.hopperUp,
-                        new SleepAction(0.35),
+                        new SleepAction(0.2),
                         customActions.hopperDown,
                         new SleepAction(0.35),
                         customActions.intakeFeed,
@@ -205,11 +205,11 @@ public class TeleOp2PLimelight extends LinearOpMode {
                         //customActions.stopIntake,
                         //new SleepAction(0.1),
                         customActions.hopperUp,
-                        new SleepAction(0.35),
+                        new SleepAction(0.2),
                         customActions.hopperDown,
                         new SleepAction(0.35),
                         customActions.hopperUp,
-                        new SleepAction(0.35),
+                        new SleepAction(0.2),
                         customActions.hopperDown,
 
                         customActions.intakeForward

@@ -62,7 +62,7 @@ public class Intake {
                 setVelocityRPM(1000);
                 break;
             case FEED:
-                setVelocityRPM(600);
+                setVelocityRPM(800);
                 break;
             case BACKWARD:
                 setVelocityRPM(-1000);
