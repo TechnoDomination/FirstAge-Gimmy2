@@ -20,13 +20,14 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@TeleOp(name = "TeleOp", group = "TeleOp")
-public class TeleOpAutomation extends LinearOpMode {
+@TeleOp(name = "TeleOp 1P Manual", group = "TeleOp")
+public class TeleOp1PManual extends LinearOpMode {
 
 
     private List<Action> runningActions = new ArrayList<>();
@@ -52,6 +53,7 @@ public class TeleOpAutomation extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterhood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
@@ -62,9 +64,10 @@ public class TeleOpAutomation extends LinearOpMode {
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
-            //shooter.update();
+            shooter.update();
             intake.update();
             telemetry.update();
+            shooterhood.update();
 
             //double distance = distanceSensor.getDistance(DistanceUnit.CM);
             double distance = getFilteredDistance();
@@ -77,8 +80,9 @@ public class TeleOpAutomation extends LinearOpMode {
             if (!isStarted){
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
-                //shooter.state = Shooter.State.CLOSE;
+                shooter.state = Shooter.State.CLOSE;
                 intake.state = Intake.State.FORWARD;
+                shooterhood.state = ShooterHood.State.MIDDLE;
             }
 
 
@@ -87,22 +91,27 @@ public class TeleOpAutomation extends LinearOpMode {
 
 
             if (gamepad1.a) {
-                shooter.stopMotor();
-                //shooter.state = Shooter.State.REST;
+               // shooter.state = Shooter.State.REST;
+                shooter.state = Shooter.State.REST;
+                //shooter.state = Shooter.State.TOOCLOSE;
+                shooterhood.state = ShooterHood.State.DOWN;
             }
             if (gamepad1.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
-               // shooter.state = Shooter.State.MIDDLE;
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(80));
+                shooter.state = Shooter.State.MIDDLE;
+                shooterhood.state = ShooterHood.State.MIDDLE;
+               // shooter.setVelocityRPM(shooter.ShooterPowerDistance(80));
             }
             if (gamepad1.y) {
                 //shooter.setVelocityRPM(3100);
-               // shooter.state = Shooter.State.CLOSE;
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
+                shooter.state = Shooter.State.CLOSE;
+                shooterhood.state = ShooterHood.State.UP;
+               // shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
             }
             if (gamepad1.x) {
                // shooter.state = Shooter.State.FAR; //setPower(0.7)
-                shooter.setVelocityRPM(shooter.ShooterPowerDistance(130));
+                shooter.state = Shooter.State.FAR;
+                shooterhood.state = ShooterHood.State.UP;
             }
             if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
@@ -129,6 +138,7 @@ public class TeleOpAutomation extends LinearOpMode {
             telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
             telemetry.addData("deviceName", distanceSensor.getDeviceName());
             telemetry.addData("range", distanceSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("ShooterHood telemetry", shooterhood.getShooterHoodTelemetry());
             telemetry.update();
             //hopper
           /*  if (gamepad1.right_bumper) {
@@ -157,8 +167,13 @@ public class TeleOpAutomation extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 runningActions.add(new SequentialAction(
                    customActions.hopperUp,
-                   new SleepAction(0.15),
-                   customActions.hopperDown
+                   new SleepAction(0.2),
+                   customActions.hopperDown,
+                        new SleepAction(0.2),
+                        customActions.hopperUp,
+                        new SleepAction(0.2),
+                        customActions.hopperDown
+
                 ));
             }
         }

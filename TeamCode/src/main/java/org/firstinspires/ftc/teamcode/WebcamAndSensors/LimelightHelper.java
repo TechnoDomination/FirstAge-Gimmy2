@@ -6,6 +6,8 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
+
 import java.util.List;
 
 public class LimelightHelper {
@@ -53,7 +55,7 @@ public class LimelightHelper {
         List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
         for (LLResultTypes.FiducialResult fiducial : fiducials) {
             int id = fiducial.getFiducialId();
-            if (side == false) {
+            if (AllianceManager.isBlueAlliance) {
             if (result != null && result.isValid() && id == 20) {
                 double ty = result.getTy();
                 double angleToGoalDegrees = 27 + ty;
@@ -61,7 +63,7 @@ public class LimelightHelper {
                 //26 is the goal height - limelight lens height
                 return 26 / Math.tan(angleToGoalRadians);
             }
-            } else if (side == true) {
+            } else if (AllianceManager.isRedAlliance) {
                 if (result != null && result.isValid() && id == 24) {
                     double ty = result.getTy();
                     double angleToGoalDegrees = 27 + ty;

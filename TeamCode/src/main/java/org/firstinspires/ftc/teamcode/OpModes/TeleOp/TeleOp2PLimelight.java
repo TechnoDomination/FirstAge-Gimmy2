@@ -6,10 +6,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -26,9 +24,8 @@ import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Disabled
-@TeleOp(name = "TeleOpShooterTest", group = "TeleOp")
-public class ShooterTestingTeleOp extends LinearOpMode {
+@TeleOp(name = "TeleOp 2P Limelight", group = "TeleOp")
+public class TeleOp2PLimelight extends LinearOpMode {
 
 
     private List<Action> runningActions = new ArrayList<>();
@@ -53,27 +50,30 @@ public class ShooterTestingTeleOp extends LinearOpMode {
 
         Drive drive = new Drive(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
-        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
 
+
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
+        if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
+            allianceManager.isRedAlliance = true;
+        }
 
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
-            //shooter.update();
-            //intake.update();
             shooterHood.update();
+            intake.update();
             telemetry.update();
 
-            //double distance = distanceSensor.getDistance(DistanceUnit.CM);
+           // double distance = distanceSensor.getDistance(DistanceUnit.CM);
             double distance = getFilteredDistance();
             if (distance <= 10) {
                 rgblight.setPosition(0.7);
@@ -81,31 +81,29 @@ public class ShooterTestingTeleOp extends LinearOpMode {
                 rgblight.setPosition(0);
             }
 
-            if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
-                allianceManager.isRedAlliance = true;
-            }
 
-            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
+
             limelightHelper.isReadyToShoot();
+            shooterPowerDistance = shooter.ShooterPowerDistance(limelightHelper.getDistance());
             telemetry.addData("limelight telemetry: ", limelightHelper.getLimelightTelemetry());
-            telemetry.addData("Shooter Power Distance: ", shooterPowerDistance);
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.update();
 
-            if (!isStarted){
+            if (!isStarted) {
                 isStarted = true;
                 hopper.state = Hopper.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
-                shooter.setVelocityRPM(shooterPowerDistance);
-                //shooter.setPower();
+                shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
+                //shooter.setVelocityRPM(1000);
                 intake.state = Intake.State.FORWARD;
-                shooterHood.state = ShooterHood.State.FAR;
+                shooterHood.state = ShooterHood.State.MIDDLE;
             }
 
 
             drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             shooter.setVelocityRPM(shooterPowerDistance);
+
 
             if (shooterPowerDistance < 4000){
                 shooterHood.state = ShooterHood.State.DOWN;
@@ -120,21 +118,28 @@ public class ShooterTestingTeleOp extends LinearOpMode {
                 //shooter.state = Shooter.State.FAR;
             }
 
-            if (gamepad1.a) {
-                //shooter.stopMotor();
-                shooter.state = Shooter.State.REST;
+
+            if (gamepad2.a) {
+                shooter.stopMotor();
+                //shooter.state = Shooter.State.REST;
             }
-            if (gamepad1.b) {
+            if (gamepad2.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
                 shooter.state = Shooter.State.MIDDLE;
-
+                //shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
             }
-            if (gamepad1.y) {
+            if (gamepad2.y) {
                 //shooter.setVelocityRPM(3100);
                 shooter.state = Shooter.State.CLOSE;
+                //shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
+            }
+            if (gamepad2.x) {
+                 shooter.state = Shooter.State.FAR; //setPower(0.7)
             }
             if (gamepad1.x) {
-                shooter.state = Shooter.State.FAR; //setPower(0.7)
+               // shooter.state = Shooter.State.FAR; //setPower(0.7)
+                //limelightHelper.stopLimelight();
+                shooter.update();
             }
             if (gamepad1.dpad_up) {
                 intake.state = Intake.State.FORWARD;
@@ -149,16 +154,8 @@ public class ShooterTestingTeleOp extends LinearOpMode {
                 intake.state = Intake.State.REST;
             }
 
-            if (gamepad2.dpad_up) {
-                shooter.setVelocityRPM(shooter.targetRPM + 50);
-            }
-            if (gamepad2.dpad_down) {
-                shooter.setVelocityRPM(shooter.targetRPM - 50);
-            }
 
-
-
-/*
+        /*
             telemetry.addData("Shooter Power For Left Motor:", shooter.ShooterMotorLeft.getVelocity());
             //telemetry.addData("Shooter Power For Right Motor:", shooter.ShooterMotorRight.getVelocity());
             telemetry.addData("Left PIDFCoeff : ", shooter.ShooterMotorLeft.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
@@ -169,13 +166,13 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             telemetry.addData("deviceName", distanceSensor.getDeviceName());
             telemetry.addData("range", distanceSensor.getDistance(DistanceUnit.CM));
             telemetry.update();
+            */
 
- */
             //hopper
           /*  if (gamepad1.right_bumper) {
                     hopper.state = Hopper.State.UP;
             }*/
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 hopper.state = Hopper.State.DOWN;
             }
 
@@ -195,15 +192,34 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             }
             runningActions = newActions;
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 runningActions.add(new SequentialAction(
-                   customActions.hopperUp,
-                   new SleepAction(0.5),
-                   customActions.hopperDown
+                        customActions.stopIntake,
+                        new SleepAction(0.25),
+                        customActions.hopperUp,
+                        new SleepAction(0.2),
+                        customActions.hopperDown,
+                        new SleepAction(0.35),
+                        customActions.intakeFeed,
+                        new SleepAction(.5),
+                        //customActions.stopIntake,
+                        //new SleepAction(0.1),
+                        customActions.hopperUp,
+                        new SleepAction(0.2),
+                        customActions.hopperDown,
+                        new SleepAction(0.35),
+                        customActions.hopperUp,
+                        new SleepAction(0.2),
+                        customActions.hopperDown,
+
+                        customActions.intakeForward
                 ));
             }
         }
+
+        limelightHelper.stopLimelight();
     }
+
 
     private double getFilteredDistance() {
         final int filter_count = 2;
@@ -217,5 +233,6 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         double averageDistance = totalDistance / filter_count;
 
         return averageDistance;
+
     }
 }

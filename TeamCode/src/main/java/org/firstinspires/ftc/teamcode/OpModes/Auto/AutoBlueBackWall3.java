@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
@@ -36,9 +38,11 @@ public class AutoBlueBackWall3 extends LinearOpMode {
         Shooter shooter = new Shooter(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         limelightHelper.setAlliance(false);
+        AllianceManager alliance = new AllianceManager();
       //  customActions.update();
 
         waitForStart();
@@ -48,7 +52,8 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
-
+                            alliance.blueAlliance();
+                            alliance.offRedAlliance();
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -68,17 +73,25 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 Positions.NewShootingPositionsBlueMiddleTurn.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
+                                customActions.stopIntake,
+                                new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
+                                customActions.intakeFeed,
+                                new SleepAction(.5),
+                                //customActions.stopIntake,
+                                //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
+
+                               // customActions.intakeForward,
                                 new SleepAction(hopperDownTime),
                                 Positions.BlueIntakeTape3Start.runToExact,
                                 customActions.stopDrive,
@@ -93,18 +106,26 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 Positions.ShootingPositionsBlueMiddleTurn.runToExact,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
+                                customActions.stopIntake,
+                                new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
+                                customActions.intakeFeed,
+                                new SleepAction(.5),
+                                //customActions.stopIntake,
+                                //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+
+                                //customActions.intakeForward,
+                                new SleepAction(1),
                                 Positions.BlueIntakeTape2MidStart.runToExact,
                                 customActions.stopDrive,
                                 //new SleepAction(driveTime),
@@ -116,20 +137,24 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                                 customActions.stopDrive,
                                 //new SleepAction(driveTime),
                                 Positions.ShootingPositionsBlueMiddleTurn.runToExact,
-                                customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                customActions.stopIntake,
+                                new SleepAction(0.25),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
+                                customActions.intakeFeed,
+                                new SleepAction(.5),
+                                //customActions.stopIntake,
+                                //new SleepAction(0.1),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(0.35),
                                 customActions.hopperUp,
-                                new SleepAction(hopperUpTime),
+                                new SleepAction(0.35),
                                 customActions.hopperDown,
-                                new SleepAction(hopperDownTime),
+                                new SleepAction(1),
                                 Positions.NewEndingBlue.runToExact,
                                 customActions.stopDrive,
                                 customActions.stopShooter,

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
+import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -30,6 +31,7 @@ public class AutoBlueBackWall extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        AllianceManager alliance = new AllianceManager();
         limelightHelper.setAlliance(false);
 
       //  customActions.update();
@@ -41,7 +43,8 @@ public class AutoBlueBackWall extends LinearOpMode {
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
-
+                            alliance.blueAlliance();
+                            alliance.offRedAlliance();
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());

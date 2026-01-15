@@ -46,6 +46,7 @@ public class Intake {
     public enum State {
         OFF,
         FORWARD,
+        FEED,
         BACKWARD,
         SLOWDOWN,
         REST
@@ -59,6 +60,9 @@ public class Intake {
                 break;
             case FORWARD:
                 setVelocityRPM(1000);
+                break;
+            case FEED:
+                setVelocityRPM(800);
                 break;
             case BACKWARD:
                 setVelocityRPM(-1000);
@@ -91,6 +95,8 @@ public class Intake {
             isTargetReached = true;
         } else if (state == State.FORWARD && IntakeMotor.getVelocity() >= 200) {
             isTargetReached = true;
+        } else if (state == State.FEED && IntakeMotor.getVelocity() >= 450) {
+            isTargetReached = true;
         } else if (state == State.BACKWARD && IntakeMotor.getVelocity() >= 200) {
             isTargetReached = true;
         } else {
@@ -102,6 +108,7 @@ public class Intake {
     public String getIntakeTelemetry(){
         String telemetry = "";
         telemetry = telemetry + "\n Intake Motor Amps = " + IntakeMotor.getCurrent(CurrentUnit.AMPS);
+        telemetry = telemetry + "\n Intake Velocity = " + IntakeMotor.getVelocity();
         telemetry = telemetry + "\n ";
         return telemetry;
     }
