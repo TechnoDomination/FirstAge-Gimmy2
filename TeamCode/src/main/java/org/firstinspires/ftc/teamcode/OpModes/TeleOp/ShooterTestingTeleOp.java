@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -46,6 +47,9 @@ public class ShooterTestingTeleOp extends LinearOpMode {
 
     boolean isStarted = false;
 
+    VoltageSensor batteryVoltage;
+    boolean distanceSensorEnabled;
+
 
     @Override
     public void runOpMode() {
@@ -61,6 +65,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        batteryVoltage = hardwareMap.voltageSensor.iterator().next();
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -72,6 +77,20 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             //intake.update();
             shooterHood.update();
             telemetry.update();
+
+            double voltage = batteryVoltage.getVoltage();
+
+            if(voltage < 10) {
+                distanceSensorEnabled = false;
+            }
+
+            if (distanceSensorEnabled){
+                double distance = distanceSensor.getDistance(DistanceUnit.CM);
+
+                if (!distanceSensorWorking(distance)){
+                    distanceSensorEnabled = false;
+                }
+            }
 
             //double distance = distanceSensor.getDistance(DistanceUnit.CM);
             double distance = getFilteredDistance();
@@ -217,5 +236,9 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         double averageDistance = totalDistance / filter_count;
 
         return averageDistance;
+    }
+
+    boolean distanceSensorWorking(double distance){
+        return !Double.isNaN(distance) && distance > 0 && distance < 200;
     }
 }
