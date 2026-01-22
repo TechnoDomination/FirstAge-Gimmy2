@@ -121,7 +121,7 @@ public class Shooter {
                 setVelocityRPM(5000);
                 break;
             case AUTOFARRED:
-                setVelocityRPM(5000);
+                setVelocityRPM(5500);
             case AUTOFARBLUE:
                 setVelocityRPM(5000);
             case AUTOFAR:

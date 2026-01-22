@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -47,6 +48,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
     boolean isStarted = false;
 
 
+
     @Override
     public void runOpMode() {
 
@@ -62,6 +64,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
 
+
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
 
@@ -73,13 +76,14 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             shooterHood.update();
             telemetry.update();
 
+
             //double distance = distanceSensor.getDistance(DistanceUnit.CM);
-            double distance = getFilteredDistance();
-            if (distance <= 10) {
+            //double distance = getFilteredDistance();
+            /*if (distance <= 10) {
                 rgblight.setPosition(0.7);
             } else {
                 rgblight.setPosition(0);
-            }
+            }*/
 
             if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
                 allianceManager.isRedAlliance = true;
@@ -92,6 +96,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.update();
+
 
             if (!isStarted){
                 isStarted = true;
@@ -218,4 +223,6 @@ public class ShooterTestingTeleOp extends LinearOpMode {
 
         return averageDistance;
     }
+
+
 }

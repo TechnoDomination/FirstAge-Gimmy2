@@ -22,7 +22,7 @@ public enum Positions {
     RedIntakeTape3End(new Vector2d(70, -15), PI*0.5),
     ParkPositionsRed(new Vector2d(60, 25), PI*0.25),
     TurningRed(new Vector2d(0,  90), PI*0.25),
-    NewTurningRed(new Vector2d(8,-46), PI*0.15),
+    NewTurningRed(new Vector2d(8,-40), PI*0.15),
     NewTurningRed2(new Vector2d(10,-50), PI*0.125),
     EndingRed(new Vector2d(20,  60), PI*0.25),
     NewEndingRed(new Vector2d(30,-10), PI*0.25),
