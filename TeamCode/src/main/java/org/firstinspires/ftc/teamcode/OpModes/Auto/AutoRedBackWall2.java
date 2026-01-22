@@ -62,7 +62,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                         },
 
                         new SequentialAction(
-                                customActions.shootFarRed,
+                                /*customActions.shootFarRed,
                                 customActions.intakeForward,
                                new SleepAction(1.5),
                                 Positions.NewTurningRed.runToExact,
@@ -111,7 +111,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 new SleepAction(0.35),
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
-                                customActions.hopperDown,
+                                customActions.hopperDown,*/
                                 Positions.NewEndingRed.runToExact,
                                 customActions.stopDrive,
                                 customActions.stopShooter,

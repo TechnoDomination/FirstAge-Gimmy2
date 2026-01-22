@@ -11,7 +11,7 @@ public enum Positions {
 
     //Auto Red Goal - LOCALIZER = x:48, y:55, rotation:PI*0.95
     MoveOutTriangleRedGoal(new Vector2d(40, 15), PI*.25),
-    ShootingPositionsRed(new Vector2d(30, 25), PI*.25),
+    ShootingPositionsRed(new Vector2d(30, 25), PI*.22),
     RedIntakeTape1Start(new Vector2d(40,13), PI*0.5),
     RedIntakeTape1End(new Vector2d(68, 15), PI*0.5),
     RedIntakeTape2Start(new Vector2d(40, -12), PI*0.5),
@@ -22,10 +22,10 @@ public enum Positions {
     RedIntakeTape3End(new Vector2d(70, -15), PI*0.5),
     ParkPositionsRed(new Vector2d(60, 25), PI*0.25),
     TurningRed(new Vector2d(0,  90), PI*0.25),
-    NewTurningRed(new Vector2d(8,-40), PI*0.15),
-    NewTurningRed2(new Vector2d(10,-50), PI*0.125),
+    NewTurningRed(new Vector2d(11.7,-37), PI*0.125),
+    NewTurningRed2(new Vector2d(11.7,-40), PI*0.125),
     EndingRed(new Vector2d(20,  60), PI*0.25),
-    NewEndingRed(new Vector2d(30,-10), PI*0.25),
+    NewEndingRed(new Vector2d(16,-30), 0.0),
     ShootingPositionsRedMiddle(new Vector2d(15, 22), 0.0),
     ShootingPositionsRedMiddleTurn(new Vector2d(15, 25), PI*.25),
 
@@ -72,7 +72,7 @@ public enum Positions {
         this.x = vector.x;
         this.y = vector.y;
         this.maxTime = maxTime;
-        runToExact = new P2P(vector, rotation, maxTime);
+        runToExact = new P2P(vector, rotation); //maxtime
     }
 
 

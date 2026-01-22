@@ -70,7 +70,7 @@ public class TeleOp1PLimeLight extends LinearOpMode {
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
             hopper.update();
-            shooter.update();
+            //shooter.update();
             intake.update();
             telemetry.update();
             shooterHood.update();
@@ -102,17 +102,24 @@ public class TeleOp1PLimeLight extends LinearOpMode {
                 shooterHood.state = ShooterHood.State.CLOSE;
             }
 
-
-            drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             shooter.setVelocityRPM(shooterPowerDistance);
+            drive.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            /*if (shooter.targetRPM - (shooter.ShooterMotorLeft.getVelocity()/28) * 60 < 500) {
+                shooter.setVelocityRPM(shooterPowerDistance);
+            } else {
+                //telemetry.addData("Plus 100?", "yes");
+                //telemetry.update();
+                shooter.setVelocityRPM(shooterPowerDistance+100);
+            }
 
+             */
 
-            if (shooterPowerDistance < 4000){
+            if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 60){
                 shooterHood.state = ShooterHood.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
-            } else if (shooterPowerDistance >= 4000 && shooterPowerDistance < 7200) {
+            } else if (limelightHelper.getDistance() >= 60 && limelightHelper.getDistance() < 100) {
                 shooterHood.state = ShooterHood.State.CLOSE;
-            }else if (shooterPowerDistance >= 7200 && shooterPowerDistance < 9500) {
+            }else if (limelightHelper.getDistance() >= 100 && limelightHelper.getDistance() < 125) {
                 shooterHood.state = ShooterHood.State.MIDDLE;
                 //shooter.state = Shooter.State.MIDDLE;
             } else {

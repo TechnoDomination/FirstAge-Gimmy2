@@ -22,10 +22,10 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public static final double NEW_P = 95.0;
+    public static final double NEW_P = 50.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
-    public static final double NEW_F = 0.000657;
+    public static final double NEW_F = 0.00357;
     PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
     public Shooter(HardwareMap hardwareMap) {
@@ -60,7 +60,7 @@ public class Shooter {
         // Convert RPM to ticks per second.
         this.targetRPM = targetRPM;
         targetVelocityTPS = (targetRPM / 60) * 28;
-        ShooterMotorLeft.setVelocity(targetVelocityTPS);
+        ShooterMotorLeft.setVelocity(targetVelocityTPS+200);
         //ShooterMotorRight.setVelocity(targetVelocityTPS);
     }
 
@@ -97,7 +97,7 @@ public class Shooter {
     public void update() {
         switch (state) {
             case AUTOCLOSERED:
-                setVelocityRPM(3200);
+                setVelocityRPM(3000);
                 break;
             case AUTOCLOSEBLUE:
                 setVelocityRPM(3200);
@@ -118,12 +118,12 @@ public class Shooter {
                 setVelocityRPM(3500);
                 break;
             case FAR:
-                setVelocityRPM(5000);
+                setVelocityRPM(4500);
                 break;
             case AUTOFARRED:
-                setVelocityRPM(5500);
+                setVelocityRPM(4600);
             case AUTOFARBLUE:
-                setVelocityRPM(5000);
+                setVelocityRPM(4600);
             case AUTOFAR:
                 setVelocityRPM(4600);
             case REST:

@@ -8,11 +8,11 @@ public class ShooterHood {
     public State state = State.DOWN;
     public boolean isTargetReached = false;
     public static ShooterHood instance;
-    private final double upPos = 0.45;
-    private final double middlePos = 0.375;
-    private final double closePos = 0.325;
-    private final double farPos = 0.4;
-    private final double downPos = 0.0;
+    private final double upPos = 0.75;
+    private final double middlePos = 0.52;
+    private final double closePos = 0.47;
+    private final double farPos = 0;
+    private final double downPos = 0.45;
 
     public enum State {
         UP,

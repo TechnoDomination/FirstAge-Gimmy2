@@ -47,6 +47,8 @@ public class ShooterTestingTeleOp extends LinearOpMode {
 
     boolean isStarted = false;
 
+    VoltageSensor batteryVoltage;
+    boolean distanceSensorEnabled;
 
 
     @Override
@@ -63,7 +65,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
-
+        batteryVoltage = hardwareMap.voltageSensor.iterator().next();
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -76,14 +78,27 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             shooterHood.update();
             telemetry.update();
 
+            double voltage = batteryVoltage.getVoltage();
+
+            if(voltage < 10) {
+                distanceSensorEnabled = false;
+            }
+
+            if (distanceSensorEnabled){
+                double distance = distanceSensor.getDistance(DistanceUnit.CM);
+
+                if (!distanceSensorWorking(distance)){
+                    distanceSensorEnabled = false;
+                }
+            }
 
             //double distance = distanceSensor.getDistance(DistanceUnit.CM);
-            //double distance = getFilteredDistance();
-            /*if (distance <= 10) {
+            double distance = getFilteredDistance();
+            if (distance <= 10) {
                 rgblight.setPosition(0.7);
             } else {
                 rgblight.setPosition(0);
-            }*/
+            }
 
             if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
                 allianceManager.isRedAlliance = true;
@@ -96,7 +111,6 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.update();
-
 
             if (!isStarted){
                 isStarted = true;
@@ -224,5 +238,7 @@ public class ShooterTestingTeleOp extends LinearOpMode {
         return averageDistance;
     }
 
-
+    boolean distanceSensorWorking(double distance){
+        return !Double.isNaN(distance) && distance > 0 && distance < 200;
+    }
 }
