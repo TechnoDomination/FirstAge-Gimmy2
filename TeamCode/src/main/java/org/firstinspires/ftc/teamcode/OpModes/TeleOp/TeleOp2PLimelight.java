@@ -42,6 +42,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
     private DistanceSensor distanceSensor;
 
     boolean isStarted = false;
+    boolean distanceSensorEnabled = true;
 
 
     @Override
@@ -74,11 +75,17 @@ public class TeleOp2PLimelight extends LinearOpMode {
             telemetry.update();
 
            // double distance = distanceSensor.getDistance(DistanceUnit.CM);
-            double distance = getFilteredDistance();
-            if (distance <= 10) {
-                rgblight.setPosition(0.7);
-            } else {
-                rgblight.setPosition(0);
+            if (distanceSensorEnabled){
+                double distance = getFilteredDistance();
+                if (distance <= 10) {
+                    rgblight.setPosition(0.7);
+                } else {
+                    rgblight.setPosition(0);
+                }
+
+                if (!distanceSensorWorking(distance)){
+                    distanceSensorEnabled = false;
+                }
             }
 
 
@@ -120,21 +127,23 @@ public class TeleOp2PLimelight extends LinearOpMode {
 
 
             if (gamepad2.a) {
-                shooter.stopMotor();
+                //shooter.stopMotor();
                 //shooter.state = Shooter.State.REST;
+                shooter.offset -=50;
             }
             if (gamepad2.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
-                shooter.state = Shooter.State.MIDDLE;
+                //shooter.state = Shooter.State.MIDDLE;
                 //shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
             }
             if (gamepad2.y) {
                 //shooter.setVelocityRPM(3100);
-                shooter.state = Shooter.State.CLOSE;
+                //shooter.state = Shooter.State.CLOSE;
+                shooter.offset += 50;
                 //shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
             }
             if (gamepad2.x) {
-                 shooter.state = Shooter.State.FAR; //setPower(0.7)
+                 //shooter.state = Shooter.State.FAR; //setPower(0.7)
             }
             if (gamepad1.x) {
                // shooter.state = Shooter.State.FAR; //setPower(0.7)
@@ -207,7 +216,7 @@ public class TeleOp2PLimelight extends LinearOpMode {
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,
-                        new SleepAction(0.35),
+                        new SleepAction(0.40),
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,
@@ -234,5 +243,9 @@ public class TeleOp2PLimelight extends LinearOpMode {
 
         return averageDistance;
 
+
+    }
+    boolean distanceSensorWorking(double distance){
+        return !Double.isNaN(distance) && distance > 0 && distance < 200;
     }
 }

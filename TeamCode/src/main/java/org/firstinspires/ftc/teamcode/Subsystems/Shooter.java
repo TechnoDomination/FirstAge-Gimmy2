@@ -14,6 +14,7 @@ public class Shooter {
 
     public static Shooter instance;
     public State state = State.REST;
+    public double shooterMotorRPM;
     public boolean isTargetReached = false;
     public double targetRPM = 0.0;
     public double targetVelocityTPS = 0.0;
@@ -22,10 +23,12 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public static final double NEW_P = 50.0;
+    public double offset = 200.0;
+    public double currVelToCheck = 4000.0;
+    public static final double NEW_P = 52.0;
     public static final double NEW_I = 0.0;
     public static final double NEW_D = 0.0;
-    public static final double NEW_F = 0.00357;
+    public static final double NEW_F = 0.000359;
     PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
     public Shooter(HardwareMap hardwareMap) {
@@ -45,22 +48,40 @@ public class Shooter {
 
         //setRPMdistance = (0.00725174 * Math.pow(distanceFromGoal, 3)) - (1.78957 * Math.pow(distanceFromGoal, 2)) + (152.94642 * distanceFromGoal) - 892.15026;
         //y=-0.00144221x^{3}+0.577479x^{2}-58.38114x+4656.98818
-        setRPMdistance = (-0.00144221 * Math.pow(distanceFromGoal, 3)) + (0.577479 * Math.pow(distanceFromGoal, 2)) - (58.38114 * distanceFromGoal) + 4656.98818;
+            setRPMdistance = (-0.00144221 * Math.pow(distanceFromGoal, 3)) + (0.577479 * Math.pow(distanceFromGoal, 2)) - (58.38114 * distanceFromGoal) + 4656.98818;
 
         if (setRPMdistance > 0) {
             return setRPMdistance;
         } else {
-            return 2000;
+            return 3000;
         }
     }
 
+    public boolean setCurrVelCheck(){
+
+        currVelToCheck = getShooterRPM();
+        return true;
+    }
+
+    public double getShooterRPM(){
+        shooterMotorRPM = ((ShooterMotorLeft.getVelocity()/28) * 60);
+        return shooterMotorRPM;
+    }
+
+    public boolean isRPMreached () {
+        if (getShooterRPM() >= (currVelToCheck - 50)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void setVelocityRPM(double targetRPM) {
         // Prevent setting a velocity above the motor's capability.
         // Convert RPM to ticks per second.
         this.targetRPM = targetRPM;
         targetVelocityTPS = (targetRPM / 60) * 28;
-        ShooterMotorLeft.setVelocity(targetVelocityTPS+200);
+        ShooterMotorLeft.setVelocity(targetVelocityTPS+offset);
         //ShooterMotorRight.setVelocity(targetVelocityTPS);
     }
 

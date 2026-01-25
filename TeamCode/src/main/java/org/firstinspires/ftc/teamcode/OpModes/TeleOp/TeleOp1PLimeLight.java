@@ -8,9 +8,9 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.HopperDistanceSensor;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 import java.util.ArrayList;
@@ -45,6 +46,10 @@ public class TeleOp1PLimeLight extends LinearOpMode {
 
     boolean isStarted = false;
 
+    VoltageSensor batteryVoltage;
+    boolean distanceSensorEnabled = true;
+
+
 
     @Override
     public void runOpMode() {
@@ -55,6 +60,7 @@ public class TeleOp1PLimeLight extends LinearOpMode {
         Hopper hopper = new Hopper(hardwareMap);
         Intake intake = new Intake(hardwareMap);
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
+        HopperDistanceSensor hopperDistanceSensor = new HopperDistanceSensor(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
         AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
@@ -75,13 +81,27 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             telemetry.update();
             shooterHood.update();
 
-            //double distance = distanceSensor.getDistance(DistanceUnit.CM);
-            double distance = getFilteredDistance();
-            if (distance <= 10) {
-                rgblight.setPosition(0.7);
-            } else {
-                rgblight.setPosition(0);
+            /*double voltage = batteryVoltage.getVoltage();
+
+            if(voltage < 10) {
+                distanceSensorEnabled = false;
             }
+
+             */
+
+            if (distanceSensorEnabled){
+                double distance = getFilteredDistance();
+                if (distance <= 10) {
+                    rgblight.setPosition(0.7);
+                } else {
+                    rgblight.setPosition(0);
+                }
+
+                if (!distanceSensorWorking(distance)){
+                    distanceSensorEnabled = false;
+                }
+            }
+
 
 
 
@@ -91,6 +111,7 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             telemetry.addData("Shooter Power Distance: ", shooterPowerDistance);
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
+            telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
             telemetry.update();
 
             if (!isStarted){
@@ -132,7 +153,8 @@ public class TeleOp1PLimeLight extends LinearOpMode {
                // shooter.state = Shooter.State.REST;
                 //shooter.state = Shooter.State.REST;
                 //shooter.state = Shooter.State.TOOCLOSE;
-                shooterHood.state = ShooterHood.State.DOWN;
+                //shooterHood.state = ShooterHood.State.DOWN;
+                shooter.offset -= 50.0;
             }
             if (gamepad1.b) {
                 //shooter.setVelocityRPM(2000); //setPower(0.47)
@@ -143,7 +165,8 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             if (gamepad1.y) {
                 //shooter.setVelocityRPM(3100);
                 //shooter.state = Shooter.State.CLOSE;
-                shooterHood.state = ShooterHood.State.MIDDLE;
+                //shooterHood.state = ShooterHood.State.MIDDLE;
+                shooter.offset += 50.0;
                // shooter.setVelocityRPM(shooter.ShooterPowerDistance(60));
             }
             if (gamepad1.x) {
@@ -158,10 +181,12 @@ public class TeleOp1PLimeLight extends LinearOpMode {
                 intake.state = Intake.State.BACKWARD;
             }
             if (gamepad1.dpad_left) {
-                intake.state = Intake.State.REST;
+                //intake.state = Intake.State.REST;
+                intake.stopMotor();
             }
             if (gamepad1.dpad_right) {
-                intake.state = Intake.State.REST;
+                //intake.state = Intake.State.REST;
+                intake.stopMotor();
             }
 
 
@@ -206,20 +231,23 @@ public class TeleOp1PLimeLight extends LinearOpMode {
 
             if (gamepad1.right_bumper) {
                 runningActions.add(new SequentialAction(
+                        customActions.setCurrVelCheck,
                         customActions.stopIntake,
-                        new SleepAction(0.25),
+                        customActions.shootReady,
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,
-                        new SleepAction(0.35),
-                        customActions.intakeFeed,
-                        new SleepAction(.5),
-                        //customActions.stopIntake,
                         //new SleepAction(0.1),
+                        customActions.intakeFeed,
+                        //new SleepAction(.5),
+                        //customActions.stopIntake,
+                        new SleepAction(0.25),
+                        customActions.shootReady,
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,
-                        new SleepAction(0.35),
+                        customActions.shootReady,
+                        //new SleepAction(0.25),
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,
@@ -243,5 +271,8 @@ public class TeleOp1PLimeLight extends LinearOpMode {
         double averageDistance = totalDistance / filter_count;
 
         return averageDistance;
+    }
+    boolean distanceSensorWorking(double distance){
+        return !Double.isNaN(distance) && distance > 0 && distance < 200;
     }
 }
