@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.WebcamAndSensors.HopperDistanceSensor;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Vector2d;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -108,7 +107,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSERED;
-            shooterHood.state = ShooterHood.State.CLOSE;
+            shooterHood.state = ShooterHood.State.AUTOCLOSE;
 
             return !shooter.isVelReached;
         }
@@ -118,7 +117,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSEBLUE;
-            shooterHood.state = ShooterHood.State.CLOSE;
+            shooterHood.state = ShooterHood.State.AUTOCLOSE;
 
             return !shooter.isVelReached;
         }
@@ -157,7 +156,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARBLUE;
-            shooterHood.state = ShooterHood.State.FAR;
+            shooterHood.state = ShooterHood.State.AUTOFARBLUE;
 
             return !shooter.isVelReached;
         }

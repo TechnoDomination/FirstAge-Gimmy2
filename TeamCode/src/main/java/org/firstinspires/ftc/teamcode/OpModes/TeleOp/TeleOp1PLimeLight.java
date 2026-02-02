@@ -138,9 +138,9 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             if (limelightHelper.getDistance() > 0 && limelightHelper.getDistance() < 60){
                 shooterHood.state = ShooterHood.State.DOWN;
                 //shooter.state = Shooter.State.CLOSE;
-            } else if (limelightHelper.getDistance() >= 60 && limelightHelper.getDistance() < 100) {
+            } else if (limelightHelper.getDistance() >= 60 && limelightHelper.getDistance() < 80) {
                 shooterHood.state = ShooterHood.State.CLOSE;
-            }else if (limelightHelper.getDistance() >= 100 && limelightHelper.getDistance() < 125) {
+            }else if (limelightHelper.getDistance() >= 80 && limelightHelper.getDistance() < 120) {
                 shooterHood.state = ShooterHood.State.MIDDLE;
                 //shooter.state = Shooter.State.MIDDLE;
             } else {
@@ -243,6 +243,7 @@ public class TeleOp1PLimeLight extends LinearOpMode {
                         //customActions.stopIntake,
                         new SleepAction(0.25),
                         customActions.shootReady,
+                        new SleepAction(0.5),
                         customActions.hopperUp,
                         new SleepAction(0.2),
                         customActions.hopperDown,

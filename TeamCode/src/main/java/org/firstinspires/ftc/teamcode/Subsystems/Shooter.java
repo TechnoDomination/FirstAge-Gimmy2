@@ -23,7 +23,7 @@ public class Shooter {
     DcMotorEx motorExLeft;
     public double setRPMdistance = 0.0;
     public boolean isVelReached = true;
-    public double offset = 200.0;
+    public double offset = 300.0;
     public double currVelToCheck = 4000.0;
     public static final double NEW_P = 52.0;
     public static final double NEW_I = 0.0;
@@ -121,30 +121,30 @@ public class Shooter {
                 setVelocityRPM(3000);
                 break;
             case AUTOCLOSEBLUE:
-                setVelocityRPM(3200);
+                setVelocityRPM(3000);
                 break;
             case CLOSE:
-                setVelocityRPM(3200);
+                setVelocityRPM(3100);
                 break;
             case TOOCLOSE:
                 setVelocityRPM(2800);
                 break;
             case AUTOMIDDLERED:
-                setVelocityRPM(3400);
+                setVelocityRPM(3200);
                 break;
             case AUTOMIDDLEBLUE:
-                setVelocityRPM(3400);
+                setVelocityRPM(3200);
                 break;
             case MIDDLE:
                 setVelocityRPM(3500);
                 break;
             case FAR:
-                setVelocityRPM(4500);
+                setVelocityRPM(5000);
                 break;
             case AUTOFARRED:
-                setVelocityRPM(4600);
+                setVelocityRPM(5000);
             case AUTOFARBLUE:
-                setVelocityRPM(4600);
+                setVelocityRPM(5000);
             case AUTOFAR:
                 setVelocityRPM(4600);
             case REST:

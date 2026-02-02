@@ -76,6 +76,29 @@ public class LimelightHelper {
         return -1;
     }
 
+    public double getGoalHeading() {
+        LLResult result = getLatestResult();
+        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            int id = fiducial.getFiducialId();
+            if (AllianceManager.isBlueAlliance) {
+                if (result != null && result.isValid() && id == 20) {
+                    return fiducial.getTargetPoseRobotSpace().getOrientation().getYaw();
+                }
+            } else if (AllianceManager.isRedAlliance) {
+                if (result != null && result.isValid() && id == 24) {
+                    return fiducial.getTargetPoseRobotSpace().getOrientation().getYaw();
+                }
+            }
+        }
+        return -1;
+    }
+
+    public double getGoalHeading_NotUsed(){
+        LLResult result = getLatestResult();
+        return result.getBotpose_MT2().getOrientation().getYaw();
+    }
+
 
     public String getLimelightTelemetry() {
         LLResult result = getLatestResult();
@@ -86,10 +109,13 @@ public class LimelightHelper {
             double y = fiducial.getTargetYDegrees();
             double x = fiducial.getTargetXDegrees();
             telemetry = telemetry + id + " at x: " + x + ", " + y + " degrees";
+            telemetry = telemetry + "Goal 2 " + fiducial.getTargetPoseRobotSpace().getOrientation().getYaw();
         }
         //telemetry = telemetry + "\n Tx: " + result.getTx();
          //telemetry = telemetry + "\n Ty: " + result.getTy();
         telemetry = telemetry + "\n distance From Goal: " + getDistance();
+        telemetry = telemetry + "\n Goal Heading: " + getGoalHeading();
+
         return telemetry;
     }
 }
