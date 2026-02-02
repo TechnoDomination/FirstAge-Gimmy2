@@ -58,7 +58,7 @@ public enum Positions {
     TestStart(new Vector2d(0.0,0.0),0.0),
     TestRight(new Vector2d(40.0,0.0),0.0);
 
-    public double maxTime,heading;
+    public double maxTime,heading, driveSpeed;
     public double x,y;
 
     Positions(Vector2d vector, Double rotation){
@@ -68,9 +68,20 @@ public enum Positions {
         runToExact = new P2P(vector, rotation);
     }
 
-    Positions(Vector2d vector, Double rotation, Double maxTime){
+    Positions(Vector2d vector, Double rotation, Double driveSpeed){
         this.x = vector.x;
         this.y = vector.y;
+        this.heading = rotation;
+        this.driveSpeed = driveSpeed;
+        runToExact = new P2P(vector, rotation);
+    }
+
+
+    Positions(Vector2d vector, Double rotation, Double maxTime, Double driveSpeed){
+        this.x = vector.x;
+        this.y = vector.y;
+        this.heading = rotation;
+        this.driveSpeed = driveSpeed;
         this.maxTime = maxTime;
         runToExact = new P2P(vector, rotation); //maxtime
     }

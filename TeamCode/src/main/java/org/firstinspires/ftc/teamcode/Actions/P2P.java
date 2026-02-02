@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.Actions;
+import static org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer.pose;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -10,6 +12,8 @@ import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Angle;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
+
+import kotlin.jvm.JvmOverloads;
 
 //RR - Actions
 public class P2P implements Action {
@@ -29,7 +33,7 @@ public class P2P implements Action {
     @Override
     public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
-        robotPosition = Localizer.pose;
+        robotPosition = pose;
         Drive motorController = Drive.instance;
 
         double latError = targetVector.y - robotPosition.getY();
@@ -62,8 +66,10 @@ public class P2P implements Action {
 
 
 
+
         return !(
                 Math.abs(latError) < 2 && Math.abs(axialError) < 2 && Math.abs(headingError) < Math.toRadians(5.0)
         );
+    }
     }
 }

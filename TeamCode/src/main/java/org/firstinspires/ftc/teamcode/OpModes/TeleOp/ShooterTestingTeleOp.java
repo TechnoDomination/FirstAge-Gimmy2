@@ -78,11 +78,6 @@ public class ShooterTestingTeleOp extends LinearOpMode {
             shooterHood.update();
             telemetry.update();
 
-            double voltage = batteryVoltage.getVoltage();
-
-            if(voltage < 10) {
-                distanceSensorEnabled = false;
-            }
 
             if (distanceSensorEnabled){
                 double distance = distanceSensor.getDistance(DistanceUnit.CM);
