@@ -80,19 +80,16 @@ public class ShooterTestingTeleOp extends LinearOpMode {
 
 
             if (distanceSensorEnabled){
-                double distance = distanceSensor.getDistance(DistanceUnit.CM);
+                double distance = getFilteredDistance();
+                if (distance <= 10) {
+                    rgblight.setPosition(0.7);
+                } else {
+                    rgblight.setPosition(0);
+                }
 
                 if (!distanceSensorWorking(distance)){
                     distanceSensorEnabled = false;
                 }
-            }
-
-            //double distance = distanceSensor.getDistance(DistanceUnit.CM);
-            double distance = getFilteredDistance();
-            if (distance <= 10) {
-                rgblight.setPosition(0.7);
-            } else {
-                rgblight.setPosition(0);
             }
 
             if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {

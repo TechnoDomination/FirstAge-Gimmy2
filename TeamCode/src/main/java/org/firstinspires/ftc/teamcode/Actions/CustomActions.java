@@ -6,20 +6,26 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
-import org.firstinspires.ftc.teamcode.Util.AllianceManager;
+import org.firstinspires.ftc.teamcode.WebcamAndSensors.HopperDistanceSensor;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class CustomActions {
     Shooter shooter = Shooter.instance;
     Hopper hopper = Hopper.instance;
     Intake intake = Intake.instance;
     ShooterHood shooterHood = ShooterHood.instance;
+    HopperDistanceSensor hopperDistanceSensor = HopperDistanceSensor.instance;
     public Drive drive = Drive.instance;
     public static CustomActions instance;
+    public ElapsedTime runTime = new ElapsedTime();
+    boolean timerStarted;
+    boolean reset = timerStarted;
+
 
     P2P p2p = new P2P(new Vector2d(0,0), 0);
 
@@ -101,7 +107,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSERED;
-            shooterHood.state = ShooterHood.State.CLOSE;
+            shooterHood.state = ShooterHood.State.AUTOCLOSE;
 
             return !shooter.isVelReached;
         }
@@ -111,7 +117,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOCLOSEBLUE;
-            shooterHood.state = ShooterHood.State.CLOSE;
+            shooterHood.state = ShooterHood.State.AUTOCLOSE;
 
             return !shooter.isVelReached;
         }
@@ -150,7 +156,7 @@ public class CustomActions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             shooter.state = Shooter.State.AUTOFARBLUE;
-            shooterHood.state = ShooterHood.State.FAR;
+            shooterHood.state = ShooterHood.State.AUTOFARBLUE;
 
             return !shooter.isVelReached;
         }
@@ -198,6 +204,37 @@ public class CustomActions {
             intake.state = Intake.State.SLOWDOWN;
 
             return false;
+        }
+    };
+
+    public Action setCurrVelCheck = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            return !shooter.setCurrVelCheck();
+        }
+    };
+
+    public Action shootReady = new Action() {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            if (!timerStarted){
+                runTime.reset();
+                timerStarted = true;
+            }
+
+            if (runTime.time() > 2){
+                timerStarted = false;
+                return false;
+            }
+
+            //return !shooter.isRPMreached();
+            try {
+                return !shooter.isRPMreached() && !hopperDistanceSensor.isBallinHopper();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     };
 
