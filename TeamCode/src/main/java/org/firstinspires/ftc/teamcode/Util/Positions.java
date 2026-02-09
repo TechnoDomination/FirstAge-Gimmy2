@@ -13,7 +13,7 @@ public enum Positions {
     MoveOutTriangleRedGoal(new Vector2d(40, 15), PI*.25),
     ShootingPositionsRed(new Vector2d(30, 25), PI*.22),
     RedIntakeTape1Start(new Vector2d(40,13), PI*0.5),
-    RedIntakeTape1End(new Vector2d(68, 15), PI*0.5),
+    RedIntakeTape1End(new Vector2d(80, 15), PI*0.5),
     RedIntakeTape2Start(new Vector2d(40, -12), PI*0.5),
     RedIntakeTape2End(new Vector2d(75, -12), PI*0.5),
     RedIntakeTape2MidStart(new Vector2d(40, 5), PI*0.5),
