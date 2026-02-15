@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Util.AllianceManager;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
+
 @Autonomous(name = "AutoBlueBackWallMiddle", group = "Autonomous")
 public class AutoBlueBackWall3 extends LinearOpMode {
 
@@ -54,6 +55,7 @@ public class AutoBlueBackWall3 extends LinearOpMode {
                             customActions.update();
                             alliance.blueAlliance();
                             alliance.offRedAlliance();
+                            localizer.update();
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
