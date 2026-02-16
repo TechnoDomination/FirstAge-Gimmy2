@@ -55,12 +55,12 @@ public class P2P implements Action {
         motorController.FrontRightDCMotor.setPower(rotY - rotX - turn);
         motorController.BackRightDCMotor.setPower(rotY + rotX - turn);
         isTargetReached = true;
-       /* if ((Math.abs(latError) > 2 || Math.abs(axialError) > 2) && timer.seconds() > 5 && checkTimer) {
+        if ((Math.abs(latError) > 2 || Math.abs(axialError) > 2) && timer.seconds() > 5 && checkTimer) {
             isTargetReached = false;
             checkTimer = false;
 
             return isTargetReached;
-        }*/
+        }
 
         //checking if it has reached the point
 
@@ -71,5 +71,7 @@ public class P2P implements Action {
                 Math.abs(latError) < 2 && Math.abs(axialError) < 2 && Math.abs(headingError) < Math.toRadians(5.0)
         );
     }
-    }
+
 }
+
+

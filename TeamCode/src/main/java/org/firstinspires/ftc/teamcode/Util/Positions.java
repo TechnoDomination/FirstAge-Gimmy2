@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.Actions.P2P;
 import org.firstinspires.ftc.teamcode.Actions.SetDriveTimer;
+import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 
 public enum Positions {
 
@@ -62,14 +63,14 @@ public enum Positions {
 
     public double maxTime,heading, driveSpeed;
     public double x,y;
-    public final SetDriveTimer runToExact;
+    //public final SetDriveTimer runToExact;
 
 
     Positions(Vector2d vector, Double rotation){
         this.x = vector.x;
         this.y = vector.y;
         this.heading = rotation;
-        runToExact = new SetDriveTimer(vector, rotation);
+        //runToExact = new SetDriveTimer(vector, rotation);
     }
 
     Positions(Vector2d vector, Double rotation, Double driveSpeed){
@@ -77,7 +78,7 @@ public enum Positions {
         this.y = vector.y;
         this.heading = rotation;
         this.driveSpeed = driveSpeed;
-        runToExact = new SetDriveTimer(vector, rotation);
+        //runToExact = new SetDriveTimer(vector, rotation);
     }
 
 
@@ -87,9 +88,13 @@ public enum Positions {
         this.heading = rotation;
         this.driveSpeed = driveSpeed;
         this.maxTime = maxTime;
-        runToExact = new SetDriveTimer(vector, rotation); //maxtime
+        //runToExact = new SetDriveTimer(vector, rotation); //maxtime
     }
 
 
-    public final SetDriveTimer runToExact;
+    //public final SetDriveTimer runToExact;
+
+    public SetDriveTimer runToExact() {
+        return new SetDriveTimer(new Poses(this.x, this.y, this.heading));
+    }
 }

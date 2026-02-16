@@ -7,6 +7,8 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.Positions;
@@ -25,6 +27,7 @@ public class AutoTest extends LinearOpMode{
         Hopper hopper = new Hopper(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+       // SharedPose sharedPose = new SharedPose();
 
 
        // customActions.update();
@@ -36,7 +39,7 @@ public class AutoTest extends LinearOpMode{
                         telemetryPacket -> {
                             localizer.update();
                             customActions.update();
-
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -48,7 +51,7 @@ public class AutoTest extends LinearOpMode{
                         },
 
                         new SequentialAction(
-                                Positions.MoveForward.runToExact,
+                                Positions.MoveForward.runToExact(),
                                 customActions.stopDrive
                         )
                 )
