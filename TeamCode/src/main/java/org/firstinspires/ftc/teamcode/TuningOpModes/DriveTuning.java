@@ -36,6 +36,7 @@ public class DriveTuning extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         telemetryPacket -> {
+
                             localizer.update();
                             drive.xPid.setPIDF(new PIDFParams(p,i,d));
                             drive.yPid.setPIDF(new PIDFParams(p2,i2,d2));
@@ -48,7 +49,7 @@ public class DriveTuning extends LinearOpMode {
                             return true;
                         },
                         new SequentialAction(
-                                Positions.Test2.runToExact,
+                                Positions.Test2.runToExact(),
                                 // customActions.intakeForeArmSubEdge,
                                 //  new SleepAction(1),
                                 new SleepAction(1),

@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterHood;
 import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
@@ -26,8 +28,9 @@ public class AutoTest extends LinearOpMode{
         Drive drive = new Drive(hardwareMap);
         Hopper hopper = new Hopper(hardwareMap);
         Shooter shooter = new Shooter(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
+        ShooterHood shooterHood = new ShooterHood(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
-       // SharedPose sharedPose = new SharedPose();
 
 
        // customActions.update();
@@ -52,7 +55,10 @@ public class AutoTest extends LinearOpMode{
 
                         new SequentialAction(
                                 Positions.MoveForward.runToExact(),
+                                customActions.stopDrive,
+                                Positions.MoveBack.runToExact(),
                                 customActions.stopDrive
+
                         )
                 )
         );

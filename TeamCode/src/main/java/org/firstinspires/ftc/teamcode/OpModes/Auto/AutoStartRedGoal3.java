@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Actions.SetDriveTimer;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -56,7 +57,7 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
-
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -72,7 +73,7 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.shootFrontRed,
                                 customActions.intakeForward,
                                 new SleepAction(driveTime),
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 new SleepAction(driveTime),
@@ -93,15 +94,15 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
-                                Positions.RedIntakeTape1Start.runToExact,
+                                Positions.RedIntakeTape1Start.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                customActions.slowIntake,
                                // customActions.timerReset,
-                                Positions.RedIntakeTape1End.runToExact,
+                                Positions.RedIntakeTape1End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 //customActions.intakeForward,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
@@ -122,17 +123,17 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
-                                Positions.RedIntakeTape2Start.runToExact,
+                                Positions.RedIntakeTape2Start.runToExact(),
                                 customActions.stopDrive,
                                 //new SleepAction(driveTime),
                                 customActions.slowIntake,
                                 // customActions.timerReset,
-                                Positions.RedIntakeTape2End.runToExact,
+                                Positions.RedIntakeTape2End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.RedIntakeTape2Start.runToExact,
+                                Positions.RedIntakeTape2Start.runToExact(),
                                 customActions.stopDrive,
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 //customActions.intakeForward,
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
@@ -153,7 +154,7 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
-                                Positions.ParkPositionsRed.runToExact,
+                                Positions.ParkPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

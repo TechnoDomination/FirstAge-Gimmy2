@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -55,6 +56,7 @@ public class AutoRedBackWall3 extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -69,9 +71,9 @@ public class AutoRedBackWall3 extends LinearOpMode {
                                 customActions.intakeForward,
                                 customActions.shootMiddleRed,
                                 //new SleepAction(driveTime),
-                                Positions.ShootingPositionsRedMiddle.runToExact,
+                                Positions.ShootingPositionsRedMiddle.runToExact(),
                                 customActions.stopDrive,
-                                Positions.ShootingPositionsRedMiddleTurn.runToExact,
+                                Positions.ShootingPositionsRedMiddleTurn.runToExact(),
                                 customActions.stopDrive,
                                new SleepAction(driveTime),
                                 customActions.stopIntake,
@@ -91,16 +93,16 @@ public class AutoRedBackWall3 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
-                                Positions.RedIntakeTape3Start.runToExact,
+                                Positions.RedIntakeTape3Start.runToExact(),
                                 customActions.stopDrive,
                                 //new SleepAction(driveTime),
                                 customActions.slowIntake,
-                                Positions.RedIntakeTape3End.runToExact,
+                                Positions.RedIntakeTape3End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.RedIntakeTape3Start.runToExact,
+                                Positions.RedIntakeTape3Start.runToExact(),
                                 customActions.stopDrive,
-                                Positions.ShootingPositionsRedMiddleTurn.runToExact,
+                                Positions.ShootingPositionsRedMiddleTurn.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.stopIntake,
@@ -120,15 +122,15 @@ public class AutoRedBackWall3 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
-                                Positions.RedIntakeTape2MidStart.runToExact,
+                                Positions.RedIntakeTape2MidStart.runToExact(),
                                 customActions.stopDrive,
                                 customActions.slowIntake,
-                                Positions.RedIntakeTape2MidEnd.runToExact,
+                                Positions.RedIntakeTape2MidEnd.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.RedIntakeTape2MidStart.runToExact,
+                                Positions.RedIntakeTape2MidStart.runToExact(),
                                 customActions.stopDrive,
-                                Positions.ShootingPositionsRedMiddleTurn.runToExact,
+                                Positions.ShootingPositionsRedMiddleTurn.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.stopIntake,
@@ -149,7 +151,7 @@ public class AutoRedBackWall3 extends LinearOpMode {
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
                                 new SleepAction(1),
-                                Positions.NewEndingRed.runToExact,
+                                Positions.NewEndingRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
@@ -54,7 +55,7 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                             customActions.update();
                             alliance.blueAlliance();
                             alliance.offRedAlliance();
-
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());
@@ -72,7 +73,7 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                                 customActions.shootFrontBlue,
                                 customActions.intakeForward,
                                 new SleepAction(driveTime),
-                                Positions.ShootingBlueFirstShot.runToExact,
+                                Positions.ShootingBlueFirstShot.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime+1),
                                 customActions.stopIntake,
@@ -93,14 +94,14 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                                 new SleepAction(0.35),
                                 customActions.hopperDown,
                                 //customActions.intakeForward,
-                                Positions.BlueIntakeTape1Start.runToExact,
+                                Positions.BlueIntakeTape1Start.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(0.5),
                                 customActions.slowIntake,
-                                Positions.BlueIntakeTape1End.runToExact,
+                                Positions.BlueIntakeTape1End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.ShootingPositionsBlue.runToExact,
+                                Positions.ShootingPositionsBlue.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.stopIntake,
@@ -122,17 +123,17 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                                 customActions.hopperDown,
 
                                 //customActions.intakeForward,
-                                Positions.BlueIntakeTape2Start.runToExact,
+                                Positions.BlueIntakeTape2Start.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.slowIntake,
-                                Positions.BlueIntakeTape2End.runToExact,
+                                Positions.BlueIntakeTape2End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.BlueIntakeTape2Start.runToExact,
+                                Positions.BlueIntakeTape2Start.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
-                                Positions.ShootingPositionsBlue.runToExact,
+                                Positions.ShootingPositionsBlue.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(driveTime),
                                 customActions.stopIntake,
@@ -155,7 +156,7 @@ public class AutoStartBlueGoal3 extends LinearOpMode {
                                 new SleepAction(1),
 
                                 //customActions.intakeForward,
-                                Positions.ParkPositionsBlue.runToExact,
+                                Positions.ParkPositionsBlue.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

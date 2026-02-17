@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -50,7 +51,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
-
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -65,7 +66,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.shootFarRed,
                                 customActions.intakeForward,
                                new SleepAction(1.5),
-                                Positions.NewTurningRed.runToExact,
+                                Positions.NewTurningRed.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(2.5),
                                 customActions.stopIntake,
@@ -112,7 +113,7 @@ public class AutoRedBackWall2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(0.35),
                                 customActions.hopperDown,*/
-                                Positions.NewEndingRed.runToExact,
+                                Positions.NewEndingRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

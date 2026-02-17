@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Actions.P2P;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -49,6 +50,7 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());
@@ -65,7 +67,7 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                                 customActions.shootFrontRed,
                                 customActions.intakeForward,
                                 new SleepAction(1.5),
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(2),
                                 customActions.hopperUp,
@@ -80,15 +82,15 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                                 new SleepAction(1),
                                 customActions.hopperDown,
                                 new SleepAction(0.5),
-                                Positions.RedIntakeTape1Start.runToExact,
+                                Positions.RedIntakeTape1Start.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(1),
                                customActions.slowIntake,
                                // customActions.timerReset,
-                                Positions.RedIntakeTape1End.runToExact,
+                                Positions.RedIntakeTape1End.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(2),
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 //customActions.intakeForward,
                                 customActions.stopDrive,
                                 new SleepAction(2),
@@ -103,7 +105,7 @@ public class AutoStartRedGoal2 extends LinearOpMode {
                                 customActions.hopperUp,
                                 new SleepAction(1),
                                 customActions.hopperDown,
-                                Positions.ParkPositionsRed.runToExact,
+                                Positions.ParkPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

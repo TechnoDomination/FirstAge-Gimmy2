@@ -8,6 +8,8 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
@@ -44,6 +46,7 @@ public class AutoStartBlueGoal extends LinearOpMode {
                             customActions.update();
                             alliance.blueAlliance();
                             alliance.offRedAlliance();
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
 
                             telemetry.addData("X pos", Localizer.pose.getX());
@@ -59,7 +62,7 @@ public class AutoStartBlueGoal extends LinearOpMode {
                         new SequentialAction(
                                 customActions.shootFrontBlue,
                                 new SleepAction(1),
-                                Positions.ShootingPositionsBlue.runToExact,
+                                Positions.ShootingPositionsBlue.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
@@ -86,7 +89,7 @@ public class AutoStartBlueGoal extends LinearOpMode {
 
                                 customActions.intakeForward,
                                 new SleepAction(2),
-                                Positions.ParkPositionsBlue.runToExact,
+                                Positions.ParkPositionsBlue.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter
                         )

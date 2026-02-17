@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -50,6 +51,7 @@ public class AutoBlueBackWall2 extends LinearOpMode {
                             customActions.update();
                             alliance.blueAlliance();
                             alliance.offRedAlliance();
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -64,7 +66,7 @@ public class AutoBlueBackWall2 extends LinearOpMode {
                                 customActions.shootFarBlue,
                                 customActions.intakeForward,
                                 new SleepAction(1.5),
-                                Positions.NewTurningBlue.runToExact,
+                                Positions.NewTurningBlue.runToExact(),
                                 new SleepAction(3.5),
                                 customActions.stopDrive,
                                 customActions.stopIntake,
@@ -117,7 +119,7 @@ public class AutoBlueBackWall2 extends LinearOpMode {
 
                                 //customActions.intakeForward,
                                 new SleepAction(1),
-                                Positions.NewEndingBlue.runToExact,
+                                Positions.NewEndingBlue.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake

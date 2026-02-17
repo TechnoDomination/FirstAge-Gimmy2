@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
@@ -45,7 +46,7 @@ public class AutoStartRedGoal extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
-
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -60,7 +61,7 @@ public class AutoStartRedGoal extends LinearOpMode {
                         new SequentialAction(
                                 customActions.shootFrontRed,
                                 new SleepAction(1),
-                                Positions.ShootingPositionsRed.runToExact,
+                                Positions.ShootingPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(3),
                                 customActions.hopperUp,
@@ -75,7 +76,7 @@ public class AutoStartRedGoal extends LinearOpMode {
                                 new SleepAction(1),
                                 customActions.hopperDown,
                                 new SleepAction(2),
-                                Positions.ParkPositionsRed.runToExact,
+                                Positions.ParkPositionsRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter
                         )

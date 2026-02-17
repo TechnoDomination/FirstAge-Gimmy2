@@ -8,6 +8,8 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Util.AllianceManager;
@@ -44,6 +46,7 @@ public class AutoRedBackWall extends LinearOpMode {
                             customActions.update();
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
+                            SharedPose.runToExactAlways(SharedPose.targetPose);
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -57,10 +60,10 @@ public class AutoRedBackWall extends LinearOpMode {
                         new SequentialAction(
                                 customActions.shootMiddleRed,
                                 new SleepAction(2),
-                                Positions.MoveForward.runToExact,
+                                Positions.MoveForward.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(1),
-                                Positions.TurningRed.runToExact,
+                                Positions.TurningRed.runToExact(),
                                 customActions.stopDrive,
                                 new SleepAction(2),
                                 customActions.hopperUp,
@@ -75,7 +78,7 @@ public class AutoRedBackWall extends LinearOpMode {
                                 new SleepAction(1),
                                 customActions.hopperDown,
                                 new SleepAction(1),
-                                Positions.EndingRed.runToExact,
+                                Positions.EndingRed.runToExact(),
                                 customActions.stopDrive,
                                 customActions.stopShooter
 

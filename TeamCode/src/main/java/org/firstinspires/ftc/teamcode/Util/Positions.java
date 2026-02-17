@@ -53,8 +53,8 @@ public enum Positions {
     ShootingPositionsBlueMiddleTurn(new Vector2d(-12, 15), PI*-0.225),
     NewShootingPositionsBlueMiddleTurn(new Vector2d(-12, 12), PI*-0.25),
 
-    MoveForward(new Vector2d(30,  0), 0.0),
-    NewMoveForward(new Vector2d(12,  -46), 0.0),
+    MoveForward(new Vector2d(50,  0), 0.0),
+    MoveBack(new Vector2d(0,  0), 0.0),
 
     Test(new Vector2d(0.0,23.0),0.0),
     Test2(new Vector2d(0,0),0.0),
