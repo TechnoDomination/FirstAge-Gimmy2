@@ -20,7 +20,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
 @Autonomous (name = "AutoTest", group = "Autonomous")
-public class AutoTest extends LinearOpMode{
+public class
+AutoTest extends LinearOpMode{
 
     @Override
     public void runOpMode() {

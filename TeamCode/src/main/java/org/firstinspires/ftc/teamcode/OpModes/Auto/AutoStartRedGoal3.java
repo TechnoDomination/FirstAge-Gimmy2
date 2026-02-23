@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.Util.Positions;
 import org.firstinspires.ftc.teamcode.WebcamAndSensors.LimelightHelper;
 
 
-@Autonomous (name = "AutoRedGoal9Arti", group = "Autonomous")
+@Autonomous (name = "AutoRedGoal9ArtiNew", group = "Autonomous")
 public class AutoStartRedGoal3 extends LinearOpMode {
 
     Double hopperUpTime = 0.5;
@@ -104,8 +104,8 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsRed.runToExact(),
                                 //customActions.intakeForward,
-                                customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                customActions.stopDrive
+                                /*new SleepAction(driveTime),
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
                                 customActions.hopperUp,
@@ -158,6 +158,8 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.stopDrive,
                                 customActions.stopShooter,
                                 customActions.stopIntake
+
+                                 */
                         )
                 )
                );

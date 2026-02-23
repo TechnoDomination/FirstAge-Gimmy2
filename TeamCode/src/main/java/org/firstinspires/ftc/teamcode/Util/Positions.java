@@ -15,7 +15,8 @@ public enum Positions {
     MoveOutTriangleRedGoal(new Vector2d(40, 15), PI*.25),
     ShootingPositionsRed(new Vector2d(30, 25), PI*.22),
     RedIntakeTape1Start(new Vector2d(40,13), PI*0.5),
-    RedIntakeTape1End(new Vector2d(80, 15), PI*0.5),
+    RedIntakeTape1End(new Vector2d(90, 15), PI*0.5,5.0,0.5),
+    //60,15
     RedIntakeTape2Start(new Vector2d(40, -12), PI*0.5),
     RedIntakeTape2End(new Vector2d(75, -12), PI*0.5),
     RedIntakeTape2MidStart(new Vector2d(40, 5), PI*0.5),
@@ -53,7 +54,7 @@ public enum Positions {
     ShootingPositionsBlueMiddleTurn(new Vector2d(-12, 15), PI*-0.225),
     NewShootingPositionsBlueMiddleTurn(new Vector2d(-12, 12), PI*-0.25),
 
-    MoveForward(new Vector2d(50,  0), 0.0),
+    MoveForward(new Vector2d(35,  0), 0.0),
     MoveBack(new Vector2d(0,  0), 0.0),
 
     Test(new Vector2d(0.0,23.0),0.0),
@@ -61,8 +62,9 @@ public enum Positions {
     TestStart(new Vector2d(0.0,0.0),0.0),
     TestRight(new Vector2d(40.0,0.0),0.0);
 
-    public double maxTime,heading, driveSpeed;
-    public double x,y;
+
+    public double maxTime, driveSpeed;
+    public double x,y, heading;
     //public final SetDriveTimer runToExact;
 
 
@@ -89,12 +91,14 @@ public enum Positions {
         this.driveSpeed = driveSpeed;
         this.maxTime = maxTime;
         //runToExact = new SetDriveTimer(vector, rotation); //maxtime
+
     }
 
 
     //public final SetDriveTimer runToExact;
 
     public SetDriveTimer runToExact() {
-        return new SetDriveTimer(new Poses(this.x, this.y, this.heading));
+        return new SetDriveTimer(new Poses(this.x, this.y, this.heading), this.driveSpeed, this.maxTime);
     }
+
 }

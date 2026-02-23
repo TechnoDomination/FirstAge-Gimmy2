@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Actions;
 
 import static org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer.pose;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Angle;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
@@ -11,9 +13,11 @@ public class SharedPose {
     public static Poses targetPose = new Poses(0,0,0);
     public static Poses robotPosition;
 
+
     public static boolean runToExactAlways (Poses poses) {;
         robotPosition = Localizer.pose;
         Drive motorController = Drive.instance;
+        ElapsedTime timer = new ElapsedTime();
 
         double latError = poses.getY() - robotPosition.getY();
         double axialError = poses.getX() - robotPosition.getX();
@@ -36,6 +40,13 @@ public class SharedPose {
        /* if ((Math.abs(latError) > 2 || Math.abs(axialError) > 2) && timer.seconds() > 5 && checkTimer) {
             isTargetReached = false;
             checkTimer = false;*/
+
+        double xError = Localizer.pose.getX() - pose.getX();
+        double yError = Localizer.pose.getY() - pose.getY();
+        double angleError = Angle.INSTANCE.wrap(
+                -Localizer.pose.getHeading() + pose.getHeading()
+        );
+
         return true;
     }
 }

@@ -9,9 +9,9 @@ public class ShooterHood {
     public boolean isTargetReached = false;
     public static ShooterHood instance;
     private final double upPos = 0.81;
-    private final double middlePos = 0.52;
+    private final double middlePos = 0.32;
     private final double closePos = 0.25;
-    private final double closePosAuto = 0.4;
+    private final double closePosAuto = 0.3;
     private final double farPos = 0.63;
     private final double downPos = 0.25;
     private final double farBlue = 0.63;
