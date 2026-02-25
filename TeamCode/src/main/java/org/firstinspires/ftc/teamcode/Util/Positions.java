@@ -15,10 +15,11 @@ public enum Positions {
     MoveOutTriangleRedGoal(new Vector2d(40, 15), PI*.25),
     ShootingPositionsRed(new Vector2d(30, 25), PI*.22),
     RedIntakeTape1Start(new Vector2d(40,13), PI*0.5),
-    RedIntakeTape1End(new Vector2d(90, 15), PI*0.5,5.0,0.5),
+    RedIntakeTape1End(new Vector2d(90, 15), PI*0.5,5.0,0.3),
     //60,15
     RedIntakeTape2Start(new Vector2d(40, -12), PI*0.5),
-    RedIntakeTape2End(new Vector2d(75, -12), PI*0.5),
+    RedIntakeTape2End(new Vector2d(100, -12), PI*0.5,5.0,0.3),
+    //75,-12
     RedIntakeTape2MidStart(new Vector2d(40, 5), PI*0.5),
     RedIntakeTape2MidEnd(new Vector2d(67, 5), PI*0.5),
     RedIntakeTape3Start(new Vector2d(30, -15), PI*0.5),
@@ -63,8 +64,10 @@ public enum Positions {
     TestRight(new Vector2d(40.0,0.0),0.0);
 
 
-    public double maxTime, driveSpeed;
+    //public double maxTime, driveSpeed;
     public double x,y, heading;
+    public double driveSpeed;
+    public double maxTime;
     //public final SetDriveTimer runToExact;
 
 

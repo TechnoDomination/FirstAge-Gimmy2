@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 
 public class SharedPose {
-    public static Poses targetPose = new Poses(0,0,0);
+    public static Poses targetPose; //= new Poses(0,0,0);
     public static Poses robotPosition;
 
 

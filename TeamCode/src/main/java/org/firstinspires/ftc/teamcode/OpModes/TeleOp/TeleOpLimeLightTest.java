@@ -9,12 +9,16 @@ import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.GoBildaPinPointDriver;
+import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
+import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -41,6 +45,7 @@ public class TeleOpLimeLightTest extends LinearOpMode {
     double velocityY;
     double velocityX;
     double shooterPowerDistance = 0.0;
+    public static Poses robotPosition;
 
     public Servo rgblight = null;
     private DistanceSensor distanceSensor;
@@ -63,11 +68,16 @@ public class TeleOpLimeLightTest extends LinearOpMode {
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         HopperDistanceSensor hopperDistanceSensor = new HopperDistanceSensor(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
+        SharedPose sharedPose = new SharedPose();
         AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         GoBildaPinPointDriver odo = hardwareMap.get(GoBildaPinPointDriver.class,"odo");
+        Localizer localizer = new Localizer(
+                hardwareMap,
+                SharedPose.targetPose
+        );
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -93,6 +103,20 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             }
 
              */
+            TelemetryPacket telemetryPacket = new TelemetryPacket();
+                localizer.update();
+                customActions.update();
+
+                SharedPose.targetPose = new Poses(
+                        Localizer.pose.getX(),
+                        Localizer.pose.getY(),
+                        Localizer.pose.getHeading()
+                );
+                double x = Localizer.pose.getX();
+                double y = Localizer.pose.getY();
+                double heading = Localizer.pose.getHeading();
+
+
 
             if (gamepad1.x){
                 allianceManager.isBlueAlliance = true;
@@ -127,6 +151,9 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
+            telemetry.addData("Auto point X: ", odo.getEncoderX());
+            telemetry.addData("Auto point Y: ", odo.getEncoderY());
+            telemetry.addData("Auto heading: ", odo.getHeading());
             telemetry.update();
 
             if (!isStarted){

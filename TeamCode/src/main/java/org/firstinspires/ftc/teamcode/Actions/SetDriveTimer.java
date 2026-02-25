@@ -13,16 +13,18 @@ import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Angle;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer;
 import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
+import org.firstinspires.ftc.teamcode.Util.Positions;
 
 public class SetDriveTimer implements Action {
 
 
-    public Double driveSpeed = null;
-    public Double maxTime = null;
+    public double driveSpeed;
+    public double maxTime;
     Poses pose;
 
     ElapsedTime timer = new ElapsedTime();
     public boolean started = false;
+
 
     public SetDriveTimer(Poses pose, double driveSpeed, double maxTime) {
         this.pose = pose;
@@ -60,15 +62,17 @@ public class SetDriveTimer implements Action {
             );
         //return false;
 
-        if (driveSpeed != null && maxTime != null) return !(
-                Math.abs(xError) < 2 && Math.abs(yError) < 2 && Math.abs(headingError) < Math.toRadians(5.0)
-        );
-
-        else {boolean targetReached = Math.abs(xError) <= 3.0 &&
+        if (driveSpeed > 0 && maxTime > 0)  {
+            boolean targetReached = Math.abs(xError) <= 3.0 &&
                     Math.abs(yError) <= 3.0 &&
                     Math.abs(headingError) <= Math.toRadians(5.0);
             boolean isComplete = targetReached || timer.seconds() > maxTime; return isComplete;
         }
+
+        else return  !(
+                Math.abs(xError) < 2 && Math.abs(yError) < 2 && Math.abs(headingError) < Math.toRadians(5.0)
+
+        );
 
 //        /*return !(
 //                Math.abs(xError) < 2 && Math.abs(yError) < 2 && Math.abs(headingError) < Math.toRadians(5.0)
