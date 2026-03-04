@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Actions.AutoGlobals;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
 import org.firstinspires.ftc.teamcode.Actions.SetDriveTimer;
 import org.firstinspires.ftc.teamcode.Actions.SharedPose;
@@ -44,6 +45,8 @@ public class AutoStartRedGoal3 extends LinearOpMode {
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         limelightHelper.setAlliance(true);
         AllianceManager alliance = new AllianceManager();
+        SharedPose sharedPose = new SharedPose();
+       // AutoGlobals.messageFromAuto = "Info moved :)";
 
 
         //customActions.update();
@@ -58,6 +61,9 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                             alliance.redAlliance();
                             alliance.offBlueAlliance();
                             SharedPose.runToExactAlways(SharedPose.targetPose);
+                            //SharedPose.robotPosition = Poses(Localizer.pose.x)
+
+
 
                             telemetry.addData("X pos", Localizer.pose.getX());
                             telemetry.addData("Y pos", Localizer.pose.getY());
@@ -160,10 +166,18 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.stopIntake
 
 
+
+
                         )
+
+
                 )
                );
-
+                    /*SharedPose.robotPosition = new Poses(
+                        Localizer.pose.getX(),
+                        Localizer.pose.getY(),
+                        Localizer.pose.getHeading()
+                    );*/
     }
 }
 

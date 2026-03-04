@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 
+import static org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Localizer.pose;
+
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -68,22 +70,30 @@ public class TeleOpLimeLightTest extends LinearOpMode {
         ShooterHood shooterHood = new ShooterHood(hardwareMap);
         HopperDistanceSensor hopperDistanceSensor = new HopperDistanceSensor(hardwareMap);
         CustomActions customActions = new CustomActions(hardwareMap);
-        SharedPose sharedPose = new SharedPose();
+        //SharedPose sharedPose = new SharedPose();
         AllianceManager allianceManager = new AllianceManager();
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
         GoBildaPinPointDriver odo = hardwareMap.get(GoBildaPinPointDriver.class,"odo");
+
         Localizer localizer = new Localizer(
                 hardwareMap,
                 SharedPose.targetPose
         );
+
+        /*odo.setPosition(
+                SharedPose.targetPose.getX(),
+                SharedPose.targetPose.getY(),
+                SharedPose.targetPose.getHeading()
+        );*/
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
         if (!allianceManager.isRedAlliance && !allianceManager.isBlueAlliance) {
             allianceManager.isRedAlliance = true;
         }
+
 
 
         waitForStart();
@@ -103,7 +113,16 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             }
 
              */
-            TelemetryPacket telemetryPacket = new TelemetryPacket();
+
+            if (SharedPose.robotPosition != null) {
+                Localizer.pose = new Poses(
+                        SharedPose.robotPosition.getX(),
+                        SharedPose.robotPosition.getY(),
+                        SharedPose.robotPosition.getHeading()
+                );
+            }
+
+           /* while (opModeIsActive() && !isStopRequested()) {
                 localizer.update();
                 customActions.update();
 
@@ -112,10 +131,10 @@ public class TeleOpLimeLightTest extends LinearOpMode {
                         Localizer.pose.getY(),
                         Localizer.pose.getHeading()
                 );
-                double x = Localizer.pose.getX();
-                double y = Localizer.pose.getY();
-                double heading = Localizer.pose.getHeading();
-
+                double x = pose.getX();
+                double y = pose.getY();
+                double heading = pose.getHeading();
+            }*/
 
 
             if (gamepad1.x){
@@ -154,7 +173,9 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             telemetry.addData("Auto point X: ", odo.getEncoderX());
             telemetry.addData("Auto point Y: ", odo.getEncoderY());
             telemetry.addData("Auto heading: ", odo.getHeading());
+            telemetry.addData("Robot position: ", SharedPose.robotPosition);
             telemetry.update();
+            odo.update();
 
             if (!isStarted){
                 isStarted = true;

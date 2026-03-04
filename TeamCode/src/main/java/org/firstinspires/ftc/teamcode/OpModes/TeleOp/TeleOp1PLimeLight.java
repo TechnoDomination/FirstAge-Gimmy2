@@ -13,7 +13,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Actions.AutoGlobals;
 import org.firstinspires.ftc.teamcode.Actions.CustomActions;
+import org.firstinspires.ftc.teamcode.Actions.SharedPose;
+import org.firstinspires.ftc.teamcode.GoBildaPinPointOdo.Poses;
 import org.firstinspires.ftc.teamcode.Subsystems.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
@@ -48,6 +51,9 @@ public class TeleOp1PLimeLight extends LinearOpMode {
 
     VoltageSensor batteryVoltage;
     boolean distanceSensorEnabled = true;
+    //public static Poses autoPoints = SharedPose.robotPosition;
+   // public static double FinalPosition = SharedPose.setFinalPose();
+
 
 
 
@@ -66,6 +72,7 @@ public class TeleOp1PLimeLight extends LinearOpMode {
         rgblight = hardwareMap.get(Servo.class, "Rgblight");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distance_sensor");
         LimelightHelper limelightHelper = new LimelightHelper(hardwareMap);
+        SharedPose sharedPose = new SharedPose();
 
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) distanceSensor;
 
@@ -112,11 +119,12 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             telemetry.addData("Shooter telemetry: ", shooter.getShooterTelemetry());
             telemetry.addData("Alliance telemetry: ", allianceManager.getAllianceManagerTelemetry() );
             telemetry.addData("Intake Telemetry: ", intake.getIntakeTelemetry());
+            //telemetry.addData("Robot position: ", SharedPose.setFinalPose());
             telemetry.update();
 
             if (!isStarted){
                 isStarted = true;
-                hopper.state = Hopper.State.DOWN;
+                hopper.state = Hopper.State.REST;
                 shooter.state = Shooter.State.CLOSE;
                 //shooter.setVelocityRPM(shooter.ShooterPowerDistance(limelightHelper.getDistance()));
                 intake.state = Intake.State.FORWARD;
@@ -205,6 +213,8 @@ public class TeleOp1PLimeLight extends LinearOpMode {
             telemetry.update();
 
            */
+
+
             //hopper
           /*  if (gamepad1.right_bumper) {
                     hopper.state = Hopper.State.UP;
