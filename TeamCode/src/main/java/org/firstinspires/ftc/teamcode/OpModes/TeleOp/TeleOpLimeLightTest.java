@@ -104,7 +104,7 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             telemetry.update();
             //shooterHood.update();
 
-            odo.update();
+            localizer.update();
 
             /*double voltage = batteryVoltage.getVoltage();
 
@@ -175,7 +175,9 @@ public class TeleOpLimeLightTest extends LinearOpMode {
             telemetry.addData("Auto heading: ", odo.getHeading());
             telemetry.addData("Robot position: ", SharedPose.robotPosition);
             telemetry.update();
-            odo.update();
+            localizer.update();
+            SharedPose.setFinalPose();
+            //robotPosition = pose;
 
             if (!isStarted){
                 isStarted = true;

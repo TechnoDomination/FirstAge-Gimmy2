@@ -80,8 +80,8 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.intakeForward,
                                 new SleepAction(driveTime),
                                 Positions.ShootingPositionsRed.runToExact(),
-                                customActions.stopDrive,
-                                new SleepAction(driveTime),
+                                customActions.stopDrive
+                                /*new SleepAction(driveTime),
                                 new SleepAction(driveTime),
                                 customActions.stopIntake,
                                 new SleepAction(0.25),
@@ -165,6 +165,8 @@ public class AutoStartRedGoal3 extends LinearOpMode {
                                 customActions.stopShooter,
                                 customActions.stopIntake
 
+
+                                 */
 
 
 

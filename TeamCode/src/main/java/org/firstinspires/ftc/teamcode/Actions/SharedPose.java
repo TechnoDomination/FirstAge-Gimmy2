@@ -13,7 +13,8 @@ public class SharedPose {
     public static Poses targetPose = new Poses(0,0,0);
     public static Poses robotPosition = null;
     public static void setFinalPose(){
-        robotPosition = new Poses(pose.getX(), pose.getY(), pose.getHeading());
+        //robotPosition = new Poses(pose.getX(), pose.getY(), pose.getHeading());
+        robotPosition = pose;
     }
 
 
